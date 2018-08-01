@@ -57,7 +57,8 @@ public class CharacterBehaviour : MonoBehaviour
 
             #region Actions Checkers and Executors
             Moving(stateID);
-            Debug.Log("End Turn? :" +  turnController.endTurn);
+       
+           Debug.Log("End Turn? :" +  turnController.endTurn);
             #endregion
         //}
     }

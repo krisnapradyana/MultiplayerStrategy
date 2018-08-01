@@ -6,6 +6,10 @@ using CharacterSelectionFSM;
 
 public class CharacterSelectLogic : MonoBehaviour {
 
+    //Tambahan Efath
+    public GameObject[] CharacterPoint;
+    //Tambahan Efath
+    
     public DirectionControl[] charactersControl;
     public Button[] switchCharacters;
     public Button[] directionalButtons;
