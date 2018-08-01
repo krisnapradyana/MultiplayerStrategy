@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 7e158c9a68c739b41ac802c87ba4bae5
+timeCreated: 1528358670
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Flaticon
+  fontNames:
+  - Flaticon
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

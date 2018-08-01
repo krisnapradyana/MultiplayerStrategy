@@ -1,0 +1,79 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 22/06/2016 15:12
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-arabian-shield:before { content: "\f100"; }
+.flaticon-classic-shield:before { content: "\f101"; }
+.flaticon-eagle-shield:before { content: "\f102"; }
+.flaticon-security-shield:before { content: "\f103"; }
+.flaticon-security-shield-1:before { content: "\f104"; }
+.flaticon-shield:before { content: "\f105"; }
+.flaticon-shield-1:before { content: "\f106"; }
+.flaticon-shield-2:before { content: "\f107"; }
+.flaticon-shield-with-castle-inside:before { content: "\f108"; }
+.flaticon-shield-with-cross:before { content: "\f109"; }
+.flaticon-shield-with-cross-1:before { content: "\f10a"; }
+.flaticon-shield-with-crown:before { content: "\f10b"; }
+.flaticon-shield-with-curved-lines:before { content: "\f10c"; }
+.flaticon-shield-with-diagonal-bars:before { content: "\f10d"; }
+.flaticon-shield-with-hospital-symbol:before { content: "\f10e"; }
+.flaticon-shield-with-star:before { content: "\f10f"; }
+.flaticon-shield-with-sword:before { content: "\f110"; }
+.flaticon-shield-with-swords:before { content: "\f111"; }
+.flaticon-shield-with-twig:before { content: "\f112"; }
+.flaticon-usa-shield:before { content: "\f113"; }
+    
+    $font-Flaticon-arabian-shield: "\f100";
+    $font-Flaticon-classic-shield: "\f101";
+    $font-Flaticon-eagle-shield: "\f102";
+    $font-Flaticon-security-shield: "\f103";
+    $font-Flaticon-security-shield-1: "\f104";
+    $font-Flaticon-shield: "\f105";
+    $font-Flaticon-shield-1: "\f106";
+    $font-Flaticon-shield-2: "\f107";
+    $font-Flaticon-shield-with-castle-inside: "\f108";
+    $font-Flaticon-shield-with-cross: "\f109";
+    $font-Flaticon-shield-with-cross-1: "\f10a";
+    $font-Flaticon-shield-with-crown: "\f10b";
+    $font-Flaticon-shield-with-curved-lines: "\f10c";
+    $font-Flaticon-shield-with-diagonal-bars: "\f10d";
+    $font-Flaticon-shield-with-hospital-symbol: "\f10e";
+    $font-Flaticon-shield-with-star: "\f10f";
+    $font-Flaticon-shield-with-sword: "\f110";
+    $font-Flaticon-shield-with-swords: "\f111";
+    $font-Flaticon-shield-with-twig: "\f112";
+    $font-Flaticon-usa-shield: "\f113";
