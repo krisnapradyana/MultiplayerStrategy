@@ -43,4 +43,13 @@ public class DirectionControl : MonoBehaviour {
         charBehave.stateMachine.Update();
         tarDir = movTrigger.dirDetector[_triggerIndex].transform.position; 
     }
+    /// <summary>
+    /// Assign Position For Deffense Player when Strategy Mode
+    /// </summary>
+    public void AssignDeffense()
+    {
+        charBehave.stateID = CharacterBehaviour.states.DeffensePosition;
+        charBehave.stateMachine.Update();
+        tarDir = CameraRaycastPointer.hittedObject.transform.position;
+    }
 }

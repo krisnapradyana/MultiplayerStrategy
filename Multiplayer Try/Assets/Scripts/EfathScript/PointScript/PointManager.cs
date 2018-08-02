@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class PointManager : MonoBehaviour {
-    public List<GameObject> PointChild;
+
 
     CharacterSelectLogic ManagerCharSelectLogic;
 
-   public int IndexLimit;
+    public int IndexLimit;
+    public List<int> PrevIndexLimitCollect;
+    public int PrevLimit;
     public int TotalPlaced;
     public bool[] CheckPlaced;
-	// Use this for initialization
+    // Use this for initialization
 
-    
 
-	void Start () {
+
+    void Start() {
         ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>();
-       
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        
+
     }
 
+    // Update is called once per frame
+    void Update() {
+
+    }
+
+    /*
     public void DeffensePosisition(int IndexPoint) {
         
         if (CheckPlaced[IndexLimit] || CameraRaycastPointer.hittedObject.transform.tag!="Points")
@@ -32,7 +35,7 @@ public class PointManager : MonoBehaviour {
             return;
         }
        IndexLimit = (int) ManagerCharSelectLogic.currentChar;
-        Debug.Log("Object Hit " + CameraRaycastPointer.hittedObject.transform.position);
+
 
         ManagerChar.instance.CharIndex[IndexLimit].GetComponent<Button>().interactable = false;
         CheckPlaced[IndexLimit] = true;
@@ -77,8 +80,8 @@ public class PointManager : MonoBehaviour {
 
 
             }
+            */
 
-        }
-    }
-    
+
+
 }

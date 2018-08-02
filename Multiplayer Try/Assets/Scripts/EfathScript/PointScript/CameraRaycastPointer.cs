@@ -10,27 +10,28 @@ public class CameraRaycastPointer : MonoBehaviour {
     public static Transform hittedObject;
 
     CharacterSelectLogic ManagerCharSelectLogic;
+    DirectionControl ManagerDirectionControl;
 
-    public int IndexLimit;
-    public int TotalPlaced;
-    public bool[] CheckPlaced;
+    
 
     // Use this for initialization
     void Start () {
         ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>();
+        ManagerDirectionControl = FindObjectOfType<DirectionControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, RayLength, layerMask))
             {
-               
+                Debug.Log(hit.transform.name);
                 hittedObject = hit.transform;
+                ManagerDirectionControl.AssignDeffense();
             }
 
 

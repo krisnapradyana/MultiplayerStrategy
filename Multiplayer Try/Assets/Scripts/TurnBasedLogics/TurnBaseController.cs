@@ -13,6 +13,11 @@ public class TurnBaseController : MonoBehaviour {
         FirstPlayer, SecondPlayer, StrategyMode
     }
 
+
+    //tambahan efath
+    DirectionControl ManagerDirectControl;
+
+
     public states stateID;
     public bool endTurn;
 
@@ -21,7 +26,9 @@ public class TurnBaseController : MonoBehaviour {
         stateID = states.NullState;
         stateMachine = new StateMachine<TurnBaseController>(this);
         stateMachine.ChangeState(FirstPlayerTurn.Instance);
-        stateID = states.FirstPlayer;
+        stateID = states.StrategyMode;
+
+        ManagerDirectControl = FindObjectOfType<DirectionControl>();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +45,13 @@ public class TurnBaseController : MonoBehaviour {
             {
                 stateID = states.FirstPlayer;
                 stateMachine.Update();
+            }
+            else if (stateID == states.StrategyMode)
+            {
+                stateID = states.StrategyMode;
+                stateMachine.Update();
+         
+
             }
         }
         #endregion
