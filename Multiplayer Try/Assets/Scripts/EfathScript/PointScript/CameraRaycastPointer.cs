@@ -29,7 +29,7 @@ public class CameraRaycastPointer : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, RayLength, layerMask))
             {
-                Debug.Log(hit.transform.name);
+             
                 hittedObject = hit.transform;
                 ManagerDirectionControl.AssignDeffense();
             }

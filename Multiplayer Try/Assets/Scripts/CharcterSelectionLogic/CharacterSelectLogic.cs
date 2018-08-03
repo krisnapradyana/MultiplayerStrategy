@@ -7,7 +7,9 @@ using CharacterSelectionFSM;
 public class CharacterSelectLogic : MonoBehaviour {
 
     //Tambahan Efath
+   
     public GameObject[] CharacterPoint;
+    TurnBaseController ManagerTurnController;
     //Tambahan Efath
     
     public DirectionControl[] charactersControl;
@@ -26,6 +28,8 @@ public class CharacterSelectLogic : MonoBehaviour {
     private void Initialize()
     {
         stateMachine = new StateMachine<CharacterSelectLogic>(this);
+        ManagerTurnController = FindObjectOfType<TurnBaseController>();
+
         #region AssignSwitch Character Buttons
         switchCharacters[(int)character.FirstCharacter].onClick.AddListener(delegate { FirstChar(); });
         switchCharacters[(int)character.SecondCharacter].onClick.AddListener(delegate { SecondChar(); });
@@ -91,20 +95,30 @@ public class CharacterSelectLogic : MonoBehaviour {
         //there is 4 directions, so the range hardcoded as 4 
         for (int i = 0; i < charactersControl[(int)currentChar].movTrigger.dirDetector.Length ; i++)
         {
-            if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == true && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
+            // Tambahan Efath
+             if ( ManagerTurnController.FixMove)
+            {
+                directionalButtons[i].interactable = false;
+            }
+             //
+
+           else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == true && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
             {
                 directionalButtons[i].interactable = true;
             }
 
-            else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
+            else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection )
             {
                 directionalButtons[i].interactable = false;
             }
 
             else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID != CharacterBehaviour.states.CheckDirection)
             {
-               directionalButtons[i].interactable = false;
+                directionalButtons[i].interactable = false;
             }
+
+            
+        
         }
     }
 

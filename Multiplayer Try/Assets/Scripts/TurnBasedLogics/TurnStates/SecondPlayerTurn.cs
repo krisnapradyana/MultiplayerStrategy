@@ -42,7 +42,7 @@ public class SecondPlayerTurn : State<TurnBaseController>
 
     public override void UpdateState(TurnBaseController _turnState)
     { 
-        if (_turnState.stateID == TurnBaseController.states.FirstPlayer)
+        if (_turnState.stateID == TurnBaseController.states.Defender)
         {
             _turnState.stateMachine.ChangeState(FirstPlayerTurn.Instance);
         }

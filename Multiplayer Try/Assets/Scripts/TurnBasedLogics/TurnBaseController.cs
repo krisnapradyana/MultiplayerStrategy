@@ -10,16 +10,22 @@ public class TurnBaseController : MonoBehaviour {
     public enum states
     {
         NullState = 0,
-        FirstPlayer, SecondPlayer, StrategyMode
+        Defender, Attacker, StrategyMode
     }
 
 
     //tambahan efath
     DirectionControl ManagerDirectControl;
-
+    public GameObject[] PlayerManager; //Player 1 and Player 2
+    public int PrevIndexChar;
+    public int PrevIndexEnumDir;
+    public Vector3 PrevDir;
+    public bool FixMove;
+    //
 
     public states stateID;
     public bool endTurn;
+   
 
 	// Use this for initialization
 	void Start () {
@@ -36,15 +42,23 @@ public class TurnBaseController : MonoBehaviour {
         #region  Define State and Condition
         if(endTurn == true)
         {
-            if(stateID == states.FirstPlayer)
+            if(stateID == states.Defender)
             {
-                stateID = states.SecondPlayer;
+                stateID = states.Attacker;
                 stateMachine.Update();
+
+                // Tambahan sementara untuk mode offline
+                PlayerManager[1].SetActive(true);
+                PlayerManager[0].SetActive(false);
             }
-            else if(stateID == states.SecondPlayer)
+            else if(stateID == states.Attacker)
             {
-                stateID = states.FirstPlayer;
+                stateID = states.Defender;
                 stateMachine.Update();
+
+                // Tambahan sementara untuk mode offline
+                PlayerManager[0].SetActive(true);
+                PlayerManager[1].SetActive(false);
             }
             else if (stateID == states.StrategyMode)
             {
@@ -53,11 +67,13 @@ public class TurnBaseController : MonoBehaviour {
          
 
             }
+            endTurn = false; // tambahan efath
         }
         #endregion
 
         #region Action and Checkers
         Sides();
+        
         //Debug.Log("Sides : " + stateID.ToString());
         #endregion
     }
@@ -66,4 +82,6 @@ public class TurnBaseController : MonoBehaviour {
     {
         //fill something later
     }
+
+   
 }

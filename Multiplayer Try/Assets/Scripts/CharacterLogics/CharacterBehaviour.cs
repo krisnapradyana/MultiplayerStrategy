@@ -10,9 +10,9 @@ public class CharacterBehaviour : MonoBehaviour
 
     //Tambah Efath
 
-    CharacterSelectLogic ManagerCharSelectLogic;
-    PointManager ManagerPointManager;
- 
+    public CharacterSelectLogic ManagerCharSelectLogic;
+    public PointManager ManagerPointManager;
+    StrategyModeUI ManagerStrategyUI;
 
     //
 
@@ -39,6 +39,7 @@ public class CharacterBehaviour : MonoBehaviour
         ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>(); // tambah efath
         turnController = FindObjectOfType<TurnBaseController>();
         ManagerPointManager = FindObjectOfType<PointManager>();
+        ManagerStrategyUI = FindObjectOfType<StrategyModeUI>();
         dir = this.gameObject.GetComponent<DirectionControl>();
     }
 
@@ -83,7 +84,25 @@ public class CharacterBehaviour : MonoBehaviour
     {
         if (_stateID == states.Moving)
         {
+            
+            turnController.PrevDir = ManagerCharSelectLogic.CharacterPoint[turnController.PrevIndexChar].GetComponent<DirectionControl>().tarDir; // tambahan efath
             this.transform.position = Vector3.MoveTowards(this.transform.position, dir.tarDir, Speed * Time.deltaTime);
+
+            // tambahan efath
+            
+            turnController.PrevIndexChar = (int)ManagerCharSelectLogic.currentChar;
+            ManagerStrategyUI.StrategyUI[3].gameObject.SetActive(true);
+            
+            /*
+            for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
+                {
+                
+                    ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = false;
+                
+              
+             }
+            */
+           
         }
         else return;
     }
@@ -111,21 +130,24 @@ public class CharacterBehaviour : MonoBehaviour
             ManagerPointManager.PrevIndexLimitCollect.Add(ManagerPointManager.IndexLimit);
             ManagerPointManager.PrevLimit = ManagerPointManager.PrevIndexLimitCollect[ManagerPointManager.PrevIndexLimitCollect.Count-1];
 
-            Debug.Log("Object Hit " + CameraRaycastPointer.hittedObject.transform.position);
+            Debug.Log(ManagerPointManager.TotalPlaced);
+            Debug.Log(ManagerPointManager.CheckPlaced.Length - 1);
+            Debug.Log(ManagerPointManager.IndexLimit);
 
             ManagerChar.instance.CharIndex[ManagerPointManager.IndexLimit].GetComponent<Button>().interactable = false;
             ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit] = true;
             ManagerPointManager.TotalPlaced += 1;
+
             ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].transform.position = CameraRaycastPointer.hittedObject.transform.position;
             for (int i = 0; i < ManagerCharSelectLogic.CharacterPoint[ManagerChar.instance.CharIndexGlobal].GetComponent<DirectionControl>().movTrigger.dirDetector.Length; i++)
             {
-                ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].GetComponent<DirectionControl>().movTrigger.dirDetector[i].gameObject.SetActive(false);
+                ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].GetComponent<DirectionControl>().movTrigger.dirDetector[i].gameObject.SetActive(false); 
 
             }
 
             stateID = states.CheckDirection;
 
-            if (ManagerPointManager.TotalPlaced < ManagerPointManager.CheckPlaced.Length && ManagerPointManager.IndexLimit < 3)
+            if (ManagerPointManager.TotalPlaced < ManagerPointManager.CheckPlaced.Length && ManagerPointManager.IndexLimit <3)
             {
                 ManagerPointManager.IndexLimit += 1;
                 ManagerCharSelectLogic.currentChar += 1;
@@ -144,11 +166,18 @@ public class CharacterBehaviour : MonoBehaviour
                 }
 
             }
-            else if (ManagerPointManager.TotalPlaced < ManagerPointManager.CheckPlaced.Length && ManagerPointManager.IndexLimit >= 3)
+ 
+            else if (ManagerPointManager.TotalPlaced == ManagerPointManager.CheckPlaced.Length || ManagerPointManager.IndexLimit == 3)
             {
+                
+
                 ManagerPointManager.IndexLimit = 0;
                 ManagerCharSelectLogic.currentChar = 0;
-                
+
+                if (ManagerPointManager.TotalPlaced == ManagerPointManager.CheckPlaced.Length)
+                {
+                    return;
+                }
                 while (ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit])
                 {
                     ManagerPointManager.IndexLimit += 1;
@@ -161,7 +190,6 @@ public class CharacterBehaviour : MonoBehaviour
 
 
                 }
-
             }
 
         }

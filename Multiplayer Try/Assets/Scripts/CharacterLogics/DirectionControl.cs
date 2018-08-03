@@ -41,7 +41,18 @@ public class DirectionControl : MonoBehaviour {
     {
         charBehave.stateID = CharacterBehaviour.states.Moving;
         charBehave.stateMachine.Update();
-        tarDir = movTrigger.dirDetector[_triggerIndex].transform.position; 
+        tarDir = movTrigger.dirDetector[_triggerIndex].transform.position;
+
+        charBehave.turnController.FixMove = true;
+        if (_triggerIndex % 2 == 0)
+        {
+            charBehave.turnController.PrevIndexEnumDir = _triggerIndex + 1;
+        }
+        else {
+            charBehave.turnController.PrevIndexEnumDir = _triggerIndex - 1;
+        }
+
+
     }
     /// <summary>
     /// Assign Position For Deffense Player when Strategy Mode
