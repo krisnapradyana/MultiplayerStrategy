@@ -39,11 +39,19 @@ public class DirectionControl : MonoBehaviour {
 
     public void AssignDirection(int _triggerIndex)
     {
+        if ( !transform.GetComponentInParent<CharacterSelectLogic>().isActiveAndEnabled )
+        {
+            return;
+        }
         charBehave.stateID = CharacterBehaviour.states.Moving;
         charBehave.stateMachine.Update();
         tarDir = movTrigger.dirDetector[_triggerIndex].transform.position;
+        
 
+        //Tambahan Efath
         charBehave.turnController.FixMove = true;
+
+        /*
         if (_triggerIndex % 2 == 0)
         {
             charBehave.turnController.PrevIndexEnumDir = _triggerIndex + 1;
@@ -51,7 +59,7 @@ public class DirectionControl : MonoBehaviour {
         else {
             charBehave.turnController.PrevIndexEnumDir = _triggerIndex - 1;
         }
-
+        */
 
     }
     /// <summary>
@@ -60,6 +68,14 @@ public class DirectionControl : MonoBehaviour {
     public void AssignDeffense()
     {
         charBehave.stateID = CharacterBehaviour.states.DeffensePosition;
+        charBehave.stateMachine.Update();
+        tarDir = CameraRaycastPointer.hittedObject.transform.position;
+    }
+
+    public void AssignAttacker()
+    {
+        Debug.Log("aaa");
+        charBehave.stateID = CharacterBehaviour.states.AttackerPosition;
         charBehave.stateMachine.Update();
         tarDir = CameraRaycastPointer.hittedObject.transform.position;
     }

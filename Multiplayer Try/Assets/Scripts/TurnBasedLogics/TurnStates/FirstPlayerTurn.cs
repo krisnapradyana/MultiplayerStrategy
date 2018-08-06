@@ -32,7 +32,7 @@ public class FirstPlayerTurn : State<TurnBaseController>
     public override void EnterState(TurnBaseController _turnState)
     {
         Debug.Log("Entering First Player State");
-        _turnState.endTurn = false;
+       // _turnState.endTurn = false;
     }
 
     public override void ExitState(TurnBaseController _turnState)

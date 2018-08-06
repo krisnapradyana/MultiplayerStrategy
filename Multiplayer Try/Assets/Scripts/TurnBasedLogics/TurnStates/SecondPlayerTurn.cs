@@ -32,7 +32,7 @@ public class SecondPlayerTurn : State<TurnBaseController>
     public override void EnterState(TurnBaseController _turnState)
     {
         Debug.Log("Entering Second Player State");
-        _turnState.endTurn = false;
+       // _turnState.endTurn = false;
     }
 
     public override void ExitState(TurnBaseController _turnState)

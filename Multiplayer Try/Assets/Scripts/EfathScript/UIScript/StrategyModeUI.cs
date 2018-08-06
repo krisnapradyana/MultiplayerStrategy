@@ -8,10 +8,17 @@ public class StrategyModeUI : MonoBehaviour
 
     TurnBaseController ManagerTurnBase;
     PointManager ManagerPoint;
-    CharacterSelectLogic ManagerCharSelectLogic;
+ public    CharacterSelectLogic ManagerCharSelectLogic;
 
     public Button[] StrategyUI; //Undo, Done
     public bool EndStrategyPressed;
+
+    public static StrategyModeUI instace;
+
+    private void Awake()
+    {
+        instace = this;
+    }
 
     // Use this for initialization
     void Start()
@@ -22,7 +29,7 @@ public class StrategyModeUI : MonoBehaviour
 
         //   StrategyUI[1].interactable = true;
         StrategyUI[2].gameObject.SetActive(false);
-        StrategyUI[3].gameObject.SetActive(false);
+       
 
         EndStrategyPressed = false;
     }
@@ -31,7 +38,7 @@ public class StrategyModeUI : MonoBehaviour
     void Update()
     {
         EndStrategyButtonManager();
-        ManageFixMove();
+     //   ManageFixMove();
     }
 
     void EndTurnButtonManager()
@@ -99,9 +106,11 @@ public class StrategyModeUI : MonoBehaviour
              StrategyUI[2].gameObject.SetActive(true);
             ManagerTurnBase.endTurn = true;
 
-            ManagerTurnBase.stateID = TurnBaseController.states.Attacker;
-            ManagerTurnBase.stateMachine.Update();
+            //ManagerTurnBase.stateID = TurnBaseController.states.Attacker;
+            // ManagerTurnBase.stateMachine.Update();
             // SetActive Direction Control
+
+            
             
             for (int j = 0; j < ManagerCharSelectLogic.CharacterPoint.Length; j++)
             {
@@ -112,6 +121,7 @@ public class StrategyModeUI : MonoBehaviour
                 }
             }
             
+
             // Set Active Button Choose Player
             for (int i = 0; i < ManagerCharSelectLogic.switchCharacters.Length; i++)
             {
@@ -126,26 +136,43 @@ public class StrategyModeUI : MonoBehaviour
     public void EndTurn()
     {
         ManagerTurnBase.endTurn = true;
-        
-        //ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>();
-    }
-
-    public void UndoTurn()
-    {
-        
-        ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().tarDir = ManagerTurnBase.PrevDir;
-        ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().AssignDirection(ManagerTurnBase.PrevIndexEnumDir);
-        ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().Moving(ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().stateID);
-       
-        StrategyUI[3].gameObject.SetActive(false);
         ManagerTurnBase.FixMove = false;
+
+
+        //ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>();
         /*
+        for (int i = 0; i < ManagerCharSelectLogic.switchCharacters.Length; i++)
+        {
+            ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().switchCharacters[i].interactable = true;
+        }
+        */
+
         for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
         {
 
             ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = true;
         }
-        */
+
+    }
+
+    public void UndoTurn()
+    {
+        ManagerTurnBase.FixMove = false;
+        ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().tarDir = ManagerTurnBase.PrevDir;
+        ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().AssignDirection(ManagerTurnBase.PrevIndexEnumDir);
+        ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().Moving(ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().stateID);
+        //ManagerTurnBase.PrevDir = ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().tarDir; // tambahan efath
+        //ManagerTurnBase.PlayerManager[ (int)ManagerTurnBase.stateID -1].transform.GetChild((int)ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().currentChar).transform.position = Vector3.MoveTowards(ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].transform.GetChild((int)ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().currentChar).transform.position, dir.tarDir, Speed * Time.deltaTime);
+        // ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<CharacterBehaviour>().stateID = CharacterBehaviour.states.CheckDirection;
+        StrategyModeUI.instace.StrategyUI[3].gameObject.SetActive(false);
+      
+
+        for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
+        {
+
+            ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = true;
+        }
+        Debug.Log("masukUndo");
     }
 
     public void ManageFixMove()

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class ManagerChar : MonoBehaviour {
     public static ManagerChar instance;
    public List<GameObject> CharIndex;
@@ -19,8 +19,9 @@ public class ManagerChar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        
+          
+    }
 
     public void SetIndexChar(int Index)
     {

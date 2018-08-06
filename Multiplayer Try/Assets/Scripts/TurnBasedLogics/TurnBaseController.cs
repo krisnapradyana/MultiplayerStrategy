@@ -21,6 +21,8 @@ public class TurnBaseController : MonoBehaviour {
     public int PrevIndexEnumDir;
     public Vector3 PrevDir;
     public bool FixMove;
+
+    public bool[] AttackFirstPos;
     //
 
     public states stateID;
@@ -35,7 +37,9 @@ public class TurnBaseController : MonoBehaviour {
         stateID = states.StrategyMode;
 
         ManagerDirectControl = FindObjectOfType<DirectionControl>();
-	}
+
+        PlayerManager[1].SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -46,25 +50,32 @@ public class TurnBaseController : MonoBehaviour {
             {
                 stateID = states.Attacker;
                 stateMachine.Update();
-
+                PlayerManager[0].GetComponent<CharacterSelectLogic>().enabled = false ;
+                PlayerManager[1].GetComponent<CharacterSelectLogic>().enabled = true;
                 // Tambahan sementara untuk mode offline
-                PlayerManager[1].SetActive(true);
-                PlayerManager[0].SetActive(false);
+
             }
             else if(stateID == states.Attacker)
             {
                 stateID = states.Defender;
                 stateMachine.Update();
-
+                PlayerManager[1].GetComponent<CharacterSelectLogic>().enabled = false;
+                PlayerManager[0].GetComponent<CharacterSelectLogic>().enabled = true;
                 // Tambahan sementara untuk mode offline
-                PlayerManager[0].SetActive(true);
-                PlayerManager[1].SetActive(false);
+
             }
             else if (stateID == states.StrategyMode)
             {
-                stateID = states.StrategyMode;
+                // Efath Comment
+                //stateID = states.StrategyMode;
+                //stateMachine.Update();
+
+                stateID = states.Attacker;
                 stateMachine.Update();
-         
+
+                // Tambahan sementara untuk mode offline
+                PlayerManager[1].SetActive(true);
+                //PlayerManager[0].SetActive(false);
 
             }
             endTurn = false; // tambahan efath

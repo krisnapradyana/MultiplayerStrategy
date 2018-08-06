@@ -10,14 +10,16 @@ public class CameraRaycastPointer : MonoBehaviour {
     public static Transform hittedObject;
 
     CharacterSelectLogic ManagerCharSelectLogic;
-    DirectionControl ManagerDirectionControl;
-
+    [SerializeField]
+   public DirectionControl ManagerDirectionControl;
+    TurnBaseController ManagerTurnControl;
     
 
     // Use this for initialization
     void Start () {
         ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>();
         ManagerDirectionControl = FindObjectOfType<DirectionControl>();
+        ManagerTurnControl = FindObjectOfType<TurnBaseController>();
     }
 
     // Update is called once per frame
@@ -31,7 +33,22 @@ public class CameraRaycastPointer : MonoBehaviour {
             {
              
                 hittedObject = hit.transform;
-                ManagerDirectionControl.AssignDeffense();
+                if (ManagerCharSelectLogic.ManagerTurnController.stateID == TurnBaseController.states.StrategyMode)
+                {
+                    ManagerDirectionControl = ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<DirectionControl>();
+                    ManagerDirectionControl.AssignDeffense();
+                   // ManagerDirectionControl.AssignDeffense();
+                }
+                else if(ManagerCharSelectLogic.ManagerTurnController.stateID == TurnBaseController.states.Attacker) {
+                    if (ManagerTurnControl.AttackFirstPos[(int)ManagerCharSelectLogic.currentChar]== true)
+                    {
+
+                        return;
+                    }
+                
+                    ManagerTurnControl.PlayerManager[1].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<DirectionControl>().AssignAttacker();
+                    //  ManagerDirectionControl.AssignAttacker();
+                }
             }
 
 

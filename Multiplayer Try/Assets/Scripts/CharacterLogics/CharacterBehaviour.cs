@@ -24,9 +24,9 @@ public class CharacterBehaviour : MonoBehaviour
     public enum states
     {
         NullState = 0,
-        CheckDirection, Moving, OutField, Dead, DeffensePosition
+        CheckDirection, Moving, OutField, Dead, DeffensePosition, AttackerPosition
     }
-
+    
     public states stateID;
 
     public StateMachine<CharacterBehaviour> stateMachine { get; set; }
@@ -36,8 +36,8 @@ public class CharacterBehaviour : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
-        ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>(); // tambah efath
         turnController = FindObjectOfType<TurnBaseController>();
+        ManagerCharSelectLogic = GetComponentInParent<CharacterSelectLogic>(); // tambah efath
         ManagerPointManager = FindObjectOfType<PointManager>();
         ManagerStrategyUI = FindObjectOfType<StrategyModeUI>();
         dir = this.gameObject.GetComponent<DirectionControl>();
@@ -61,8 +61,9 @@ public class CharacterBehaviour : MonoBehaviour
         #region Define State Condition Here
         if (this.transform.position == dir.tarDir && stateID == states.Moving)
         {
-            stateID = states.CheckDirection;
-            stateMachine.Update();
+                        
+            // stateID = states.CheckDirection;
+            // stateMachine.Update();
             return;
         }
         #endregion
@@ -82,27 +83,29 @@ public class CharacterBehaviour : MonoBehaviour
     /// <param name="_stateID"></param>
     public void Moving(states _stateID)
     {
+       
         if (_stateID == states.Moving)
         {
             
-            turnController.PrevDir = ManagerCharSelectLogic.CharacterPoint[turnController.PrevIndexChar].GetComponent<DirectionControl>().tarDir; // tambahan efath
+           // turnController.PrevDir = ManagerCharSelectLogic.CharacterPoint[turnController.PrevIndexChar].GetComponent<DirectionControl>().tarDir; // tambahan efath
             this.transform.position = Vector3.MoveTowards(this.transform.position, dir.tarDir, Speed * Time.deltaTime);
 
             // tambahan efath
             
-            turnController.PrevIndexChar = (int)ManagerCharSelectLogic.currentChar;
-            ManagerStrategyUI.StrategyUI[3].gameObject.SetActive(true);
+          //  turnController.PrevIndexChar = (int)ManagerCharSelectLogic.currentChar;
+         
+
             
-            /*
-            for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
+                for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
                 {
-                
+
                     ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = false;
-                
-              
-             }
-            */
-           
+                }
+            
+            
+            _stateID = states.CheckDirection;
+
+
         }
         else return;
     }
@@ -115,24 +118,19 @@ public class CharacterBehaviour : MonoBehaviour
     public void DeffensePosisition(TurnBaseController.states _stateID,states _StattesSID)
     {
         if (_stateID == TurnBaseController.states.StrategyMode && _StattesSID == states.DeffensePosition)
-        {
-           Debug.Log("1");
+        { 
+      
+            ManagerPointManager.IndexLimit = (int)ManagerCharSelectLogic.currentChar;
 
-
-            if (ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit] || CameraRaycastPointer.hittedObject.transform.tag != "Points" || ManagerPointManager.TotalPlaced >3)
+            if (ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit] || CameraRaycastPointer.hittedObject.transform.tag != "Points" || ManagerPointManager.TotalPlaced > 3)
             {
 
                 return;
             }
-            
 
-            ManagerPointManager.IndexLimit = (int)ManagerCharSelectLogic.currentChar;
             ManagerPointManager.PrevIndexLimitCollect.Add(ManagerPointManager.IndexLimit);
-            ManagerPointManager.PrevLimit = ManagerPointManager.PrevIndexLimitCollect[ManagerPointManager.PrevIndexLimitCollect.Count-1];
+            ManagerPointManager.PrevLimit = ManagerPointManager.PrevIndexLimitCollect[ManagerPointManager.PrevIndexLimitCollect.Count - 1];
 
-            Debug.Log(ManagerPointManager.TotalPlaced);
-            Debug.Log(ManagerPointManager.CheckPlaced.Length - 1);
-            Debug.Log(ManagerPointManager.IndexLimit);
 
             ManagerChar.instance.CharIndex[ManagerPointManager.IndexLimit].GetComponent<Button>().interactable = false;
             ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit] = true;
@@ -141,17 +139,17 @@ public class CharacterBehaviour : MonoBehaviour
             ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].transform.position = CameraRaycastPointer.hittedObject.transform.position;
             for (int i = 0; i < ManagerCharSelectLogic.CharacterPoint[ManagerChar.instance.CharIndexGlobal].GetComponent<DirectionControl>().movTrigger.dirDetector.Length; i++)
             {
-                ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].GetComponent<DirectionControl>().movTrigger.dirDetector[i].gameObject.SetActive(false); 
+                ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].GetComponent<DirectionControl>().movTrigger.dirDetector[i].gameObject.SetActive(false);
 
             }
 
-            stateID = states.CheckDirection;
 
-            if (ManagerPointManager.TotalPlaced < ManagerPointManager.CheckPlaced.Length && ManagerPointManager.IndexLimit <3)
+
+            if (ManagerPointManager.TotalPlaced < ManagerPointManager.CheckPlaced.Length && ManagerPointManager.IndexLimit < 3)
             {
                 ManagerPointManager.IndexLimit += 1;
                 ManagerCharSelectLogic.currentChar += 1;
-                
+
                 while (ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit])
                 {
                     ManagerPointManager.IndexLimit += 1;
@@ -166,16 +164,18 @@ public class CharacterBehaviour : MonoBehaviour
                 }
 
             }
- 
+
             else if (ManagerPointManager.TotalPlaced == ManagerPointManager.CheckPlaced.Length || ManagerPointManager.IndexLimit == 3)
             {
-                
+
 
                 ManagerPointManager.IndexLimit = 0;
                 ManagerCharSelectLogic.currentChar = 0;
 
+
                 if (ManagerPointManager.TotalPlaced == ManagerPointManager.CheckPlaced.Length)
                 {
+                    stateID = states.CheckDirection;
                     return;
                 }
                 while (ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit])
@@ -192,7 +192,28 @@ public class CharacterBehaviour : MonoBehaviour
                 }
             }
 
+            stateID = states.CheckDirection;
         }
 
+        else if (_stateID == TurnBaseController.states.Attacker && _StattesSID == states.AttackerPosition)
+        {
+            if (CameraRaycastPointer.hittedObject.transform.tag == "Points" && (CameraRaycastPointer.hittedObject.transform.name == "RightPoint1" || CameraRaycastPointer.hittedObject.transform.name == "RightPoint2" ||  CameraRaycastPointer.hittedObject.transform.name == "RightPoint3") && turnController.AttackFirstPos[(int)ManagerCharSelectLogic.currentChar] == false)
+            {
+                
+                ManagerCharSelectLogic.CharacterPoint[(int)ManagerCharSelectLogic.currentChar].transform.position = CameraRaycastPointer.hittedObject.transform.position;
+
+                /*
+                for (int i = 0; i < ManagerCharSelectLogic.switchCharacters.Length; i++)
+                {
+                    ManagerCharSelectLogic.switchCharacters[i].interactable = false;
+                }
+                */
+
+                turnController.AttackFirstPos[(int)ManagerCharSelectLogic.currentChar] = true;
+                stateID = states.CheckDirection;
+                turnController.FixMove = true;
+                //Debug.Log("Enter Attacker Position");
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@ public class MovingState : State<CharacterBehaviour>
     public override void ExitState(CharacterBehaviour _characterState)
     {
         Debug.Log("Exit Move State");
-        _characterState.turnController.endTurn = true;
+        //_characterState.turnController.endTurn = true;
     }
 
     public override void UpdateState(CharacterBehaviour _characterState)

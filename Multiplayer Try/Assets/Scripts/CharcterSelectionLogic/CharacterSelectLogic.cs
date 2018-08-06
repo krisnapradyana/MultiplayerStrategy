@@ -9,7 +9,7 @@ public class CharacterSelectLogic : MonoBehaviour {
     //Tambahan Efath
    
     public GameObject[] CharacterPoint;
-    TurnBaseController ManagerTurnController;
+    public TurnBaseController ManagerTurnController;
     //Tambahan Efath
     
     public DirectionControl[] charactersControl;
@@ -32,7 +32,11 @@ public class CharacterSelectLogic : MonoBehaviour {
 
         #region AssignSwitch Character Buttons
         switchCharacters[(int)character.FirstCharacter].onClick.AddListener(delegate { FirstChar(); });
+ 
+
         switchCharacters[(int)character.SecondCharacter].onClick.AddListener(delegate { SecondChar(); });
+     
+
         switchCharacters[(int)character.ThirdCharacter].onClick.AddListener(delegate { ThirdChar(); });
         switchCharacters[(int)character.FourthCharacter].onClick.AddListener(delegate { FourthChar(); });
         #endregion
@@ -96,6 +100,7 @@ public class CharacterSelectLogic : MonoBehaviour {
         for (int i = 0; i < charactersControl[(int)currentChar].movTrigger.dirDetector.Length ; i++)
         {
             // Tambahan Efath
+       
              if ( ManagerTurnController.FixMove)
             {
                 directionalButtons[i].interactable = false;
@@ -104,6 +109,7 @@ public class CharacterSelectLogic : MonoBehaviour {
 
            else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == true && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
             {
+               
                 directionalButtons[i].interactable = true;
             }
 
