@@ -24,7 +24,7 @@ public class CharacterBehaviour : MonoBehaviour
     public enum states
     {
         NullState = 0,
-        CheckDirection, Moving, OutField, Dead, DeffensePosition, AttackerPosition
+        CheckDirection, Moving, HoldMoving, OutField, Dead, DeffensePosition, AttackerPosition
     }
 
     public enum statesType
@@ -103,18 +103,13 @@ public class CharacterBehaviour : MonoBehaviour
             this.transform.position = Vector3.MoveTowards(this.transform.position, dir.tarDir, Speed * Time.deltaTime);
 
             // tambahan efath
-            
-          //  turnController.PrevIndexChar = (int)ManagerCharSelectLogic.currentChar;
+
+            //  turnController.PrevIndexChar = (int)ManagerCharSelectLogic.currentChar;
+
+
+
+            StrategyModeUI.instace.SaveCharMove.Remove(this);
          
-
-            
-                for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
-                {
-
-                    ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = false;
-                }
-
-
 
             _stateID = states.CheckDirection;
 
@@ -223,6 +218,8 @@ public class CharacterBehaviour : MonoBehaviour
                 turnController.AttackFirstPos[(int)ManagerCharSelectLogic.currentChar] = true;
                 stateID = states.CheckDirection;
                 turnController.FixMove = true;
+
+             
                 //Debug.Log("Enter Attacker Position");
             }
         }

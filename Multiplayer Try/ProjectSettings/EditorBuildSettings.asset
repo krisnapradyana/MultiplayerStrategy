@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/try.unity
     guid: a83d61c5d36b0ba47b3abf5eb1424b75
+  - enabled: 1
+    path: Assets/coreGameplay.unity
+    guid: 8716417c7a9a5954394199f09327489d
   m_configObjects: {}

@@ -8,12 +8,15 @@ public class StrategyModeUI : MonoBehaviour
 
     TurnBaseController ManagerTurnBase;
     PointManager ManagerPoint;
- public    CharacterSelectLogic ManagerCharSelectLogic;
+    public CharacterSelectLogic ManagerCharSelectLogic;
 
     public Button[] StrategyUI; //Undo, Done
     public bool EndStrategyPressed;
 
     public static StrategyModeUI instace;
+
+    public int IndexHoldMoving;
+    public List<CharacterBehaviour> SaveCharMove;
 
     private void Awake()
     {
@@ -106,8 +109,7 @@ public class StrategyModeUI : MonoBehaviour
              StrategyUI[2].gameObject.SetActive(true);
             ManagerTurnBase.endTurn = true;
 
-            //ManagerTurnBase.stateID = TurnBaseController.states.Attacker;
-            // ManagerTurnBase.stateMachine.Update();
+           
             // SetActive Direction Control
 
             
@@ -115,9 +117,8 @@ public class StrategyModeUI : MonoBehaviour
             for (int j = 0; j < ManagerCharSelectLogic.CharacterPoint.Length; j++)
             {
                 for (int i = 0; i < ManagerCharSelectLogic.CharacterPoint[ManagerChar.instance.CharIndexGlobal].GetComponent<DirectionControl>().movTrigger.dirDetector.Length; i++)
-                {
+                { 
                     ManagerCharSelectLogic.CharacterPoint[j].GetComponent<DirectionControl>().movTrigger.dirDetector[i].gameObject.SetActive(true);
-
                 }
             }
             
@@ -136,6 +137,8 @@ public class StrategyModeUI : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
+        IndexHoldMoving += 1;
+       
         ManagerTurnBase.endTurn = true;
         ManagerTurnBase.FixMove = false;
 
@@ -153,7 +156,16 @@ public class StrategyModeUI : MonoBehaviour
 
             ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = true;
         }
-
+        if (IndexHoldMoving == 2)
+        {
+            IndexHoldMoving = 0;
+            for (int i = 0; i < SaveCharMove.Count; i++)
+            {
+                SaveCharMove[i].stateID = CharacterBehaviour.states.Moving;
+            }
+            
+      
+        }
     }
 
     /// <summary>

@@ -29,7 +29,7 @@ public class DirectionDetectorOpponent : MonoBehaviour {
                 //  dirPosition = other.transform.position;
                 //  triggerColor.color = Color.green;
             }
-            else
+            else 
 
                 return;
         }
@@ -42,9 +42,8 @@ public class DirectionDetectorOpponent : MonoBehaviour {
                 //  dirPosition = other.transform.position;
                 //  triggerColor.color = Color.green;
             }
-            else
-
-                return;
+            else 
+            return;
         }
     }
 

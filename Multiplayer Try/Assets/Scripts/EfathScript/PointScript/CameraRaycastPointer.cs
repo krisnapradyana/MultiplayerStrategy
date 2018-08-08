@@ -33,6 +33,10 @@ public class CameraRaycastPointer : MonoBehaviour {
             {
              
                 hittedObject = hit.transform;
+                if (hit.transform.tag != "Points")
+                {
+                    return;
+                }
                 if (ManagerCharSelectLogic.ManagerTurnController.stateID == TurnBaseController.states.StrategyMode)
                 {
                     ManagerDirectionControl = ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<DirectionControl>();
@@ -45,7 +49,7 @@ public class CameraRaycastPointer : MonoBehaviour {
 
                         return;
                     }
-                
+                    
                     ManagerTurnControl.PlayerManager[1].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<DirectionControl>().AssignAttacker();
                     //  ManagerDirectionControl.AssignAttacker();
                 }
