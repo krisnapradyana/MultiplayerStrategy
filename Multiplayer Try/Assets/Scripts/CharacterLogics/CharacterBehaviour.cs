@@ -26,8 +26,16 @@ public class CharacterBehaviour : MonoBehaviour
         NullState = 0,
         CheckDirection, Moving, OutField, Dead, DeffensePosition, AttackerPosition
     }
-    
+
+    public enum statesType
+    {
+        NullState = 0,
+        Attacker,Defender
+    }
+
     public states stateID;
+    public statesType stateTypeID;
+
 
     public StateMachine<CharacterBehaviour> stateMachine { get; set; }
 
@@ -41,6 +49,9 @@ public class CharacterBehaviour : MonoBehaviour
         ManagerPointManager = FindObjectOfType<PointManager>();
         ManagerStrategyUI = FindObjectOfType<StrategyModeUI>();
         dir = this.gameObject.GetComponent<DirectionControl>();
+
+        
+   
     }
 
     private void Start()
@@ -62,16 +73,16 @@ public class CharacterBehaviour : MonoBehaviour
         if (this.transform.position == dir.tarDir && stateID == states.Moving)
         {
                         
-            // stateID = states.CheckDirection;
-            // stateMachine.Update();
+             stateID = states.CheckDirection;
+             stateMachine.Update();
             return;
         }
         #endregion
 
         #region Actions Checkers and Executors
         Moving(stateID);
-        DeffensePosisition(turnController.stateID,stateID); // tambah efath
-
+        DefensePosisition(turnController.stateID,stateID); // tambah efath
+    
         Debug.Log("End Turn? :" + turnController.endTurn);
         #endregion
         //}
@@ -79,6 +90,7 @@ public class CharacterBehaviour : MonoBehaviour
 
     /// <summary>
     /// Moving state function for Character
+    /// Category: Update
     /// </summary>
     /// <param name="_stateID"></param>
     public void Moving(states _stateID)
@@ -86,7 +98,7 @@ public class CharacterBehaviour : MonoBehaviour
        
         if (_stateID == states.Moving)
         {
-            
+           
            // turnController.PrevDir = ManagerCharSelectLogic.CharacterPoint[turnController.PrevIndexChar].GetComponent<DirectionControl>().tarDir; // tambahan efath
             this.transform.position = Vector3.MoveTowards(this.transform.position, dir.tarDir, Speed * Time.deltaTime);
 
@@ -101,10 +113,10 @@ public class CharacterBehaviour : MonoBehaviour
 
                     ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = false;
                 }
-            
-            
-            _stateID = states.CheckDirection;
 
+
+
+            _stateID = states.CheckDirection;
 
         }
         else return;
@@ -112,10 +124,11 @@ public class CharacterBehaviour : MonoBehaviour
 
     /// <summary>
     /// Manage Position For Deffense Player
+    /// /// Category: Update
     /// </summary>
     /// <param name="_stateID"></param>
     /// <param name="_StattesSID"></param>
-    public void DeffensePosisition(TurnBaseController.states _stateID,states _StattesSID)
+    public void DefensePosisition(TurnBaseController.states _stateID,states _StattesSID)
     {
         if (_stateID == TurnBaseController.states.StrategyMode && _StattesSID == states.DeffensePosition)
         { 
@@ -159,8 +172,6 @@ public class CharacterBehaviour : MonoBehaviour
                         ManagerPointManager.IndexLimit = 0;
                         ManagerCharSelectLogic.currentChar = 0;
                     }
-
-
                 }
 
             }

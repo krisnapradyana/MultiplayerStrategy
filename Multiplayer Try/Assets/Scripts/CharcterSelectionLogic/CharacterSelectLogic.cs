@@ -109,17 +109,19 @@ public class CharacterSelectLogic : MonoBehaviour {
 
            else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == true && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
             {
-               
+                Debug.Log(charactersControl[(int)currentChar].movTrigger.dirDetector[i]);
                 directionalButtons[i].interactable = true;
             }
 
             else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection )
             {
+              //  Debug.Log(charactersControl[(int)currentChar].movTrigger.dirDetector[i]);
                 directionalButtons[i].interactable = false;
             }
 
             else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID != CharacterBehaviour.states.CheckDirection)
             {
+            //    Debug.Log(charactersControl[(int)currentChar].movTrigger.dirDetector[i]);
                 directionalButtons[i].interactable = false;
             }
 

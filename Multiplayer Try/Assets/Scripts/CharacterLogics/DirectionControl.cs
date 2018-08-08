@@ -37,6 +37,11 @@ public class DirectionControl : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Move Char with Button
+    /// Category: Button
+    /// </summary>
+    /// <param name="_triggerIndex"></param>
     public void AssignDirection(int _triggerIndex)
     {
         if ( !transform.GetComponentInParent<CharacterSelectLogic>().isActiveAndEnabled )
@@ -63,7 +68,8 @@ public class DirectionControl : MonoBehaviour {
 
     }
     /// <summary>
-    /// Assign Position For Deffense Player when Strategy Mode
+    /// Assign Position For Deffense Player when Strategy 
+    /// Category: Button
     /// </summary>
     public void AssignDeffense()
     {
@@ -74,7 +80,7 @@ public class DirectionControl : MonoBehaviour {
 
     public void AssignAttacker()
     {
-        Debug.Log("aaa");
+
         charBehave.stateID = CharacterBehaviour.states.AttackerPosition;
         charBehave.stateMachine.Update();
         tarDir = CameraRaycastPointer.hittedObject.transform.position;

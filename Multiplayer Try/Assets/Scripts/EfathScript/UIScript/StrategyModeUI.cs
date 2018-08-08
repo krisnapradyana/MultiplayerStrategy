@@ -38,14 +38,12 @@ public class StrategyModeUI : MonoBehaviour
     void Update()
     {
         EndStrategyButtonManager();
-     //   ManageFixMove();
     }
 
-    void EndTurnButtonManager()
-    {
-
-    }
-
+    /// <summary>
+    /// Set Not Active Button in Strategy Mode
+    /// Category: Button
+    /// </summary>
     void EndStrategyButtonManager()
     {
         if (ManagerPoint.TotalPlaced < 4 || EndStrategyPressed)
@@ -67,6 +65,7 @@ public class StrategyModeUI : MonoBehaviour
 
     /// <summary>
     /// Button Undo Position Deffense Player when StrategyMode
+    /// Category: Button
     /// </summary>
     /// 
     public void UndoStrategyPlaced()
@@ -97,6 +96,7 @@ public class StrategyModeUI : MonoBehaviour
 
     /// <summary>
     /// Button Done/Finish When Deffense Player in Strategy Mode
+    /// Category: Button
     /// </summary>
     public void EndStrategyMode()
     {
@@ -132,6 +132,7 @@ public class StrategyModeUI : MonoBehaviour
 
     /// <summary>
     ///  End Turn Every Player -> Prototype 
+    ///  Category: Button
     /// </summary>
     public void EndTurn()
     {
@@ -155,6 +156,10 @@ public class StrategyModeUI : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Undo Turn (Never Used)
+    /// Category: Button
+    /// </summary>
     public void UndoTurn()
     {
         ManagerTurnBase.FixMove = false;

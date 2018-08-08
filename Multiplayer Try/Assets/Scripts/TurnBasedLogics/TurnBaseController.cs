@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TurnBasedFSM;
 
 public class TurnBaseController : MonoBehaviour {
@@ -23,6 +24,7 @@ public class TurnBaseController : MonoBehaviour {
     public bool FixMove;
 
     public bool[] AttackFirstPos;
+
     //
 
     public states stateID;
@@ -84,6 +86,7 @@ public class TurnBaseController : MonoBehaviour {
 
         #region Action and Checkers
         Sides();
+        ManageCharIndexButton();
         
         //Debug.Log("Sides : " + stateID.ToString());
         #endregion
@@ -94,5 +97,20 @@ public class TurnBaseController : MonoBehaviour {
         //fill something later
     }
 
+    /// <summary>
+    /// Manage Chat Button to know Char current
+    /// Category: Update
+    /// </summary>
+    public void ManageCharIndexButton()
+    {
+        if (stateID == TurnBaseController.states.Defender || stateID == TurnBaseController.states.Attacker)
+        {
+            for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
+            {
+                ManagerChar.instance.CharIndex[i].transform.localPosition = new Vector3(ManagerChar.instance.CharIndex[i].transform.localPosition.x,16, ManagerChar.instance.CharIndex[i].transform.localPosition.z);
+            }
+            ManagerChar.instance.CharIndex[(int)PlayerManager[(int)stateID - 1].GetComponent<CharacterSelectLogic>().currentChar].transform.localPosition = new Vector3 (ManagerChar.instance.CharIndex[(int)PlayerManager[(int)stateID - 1].GetComponent<CharacterSelectLogic>().currentChar].transform.localPosition.x, 100, ManagerChar.instance.CharIndex[(int)PlayerManager[(int)stateID - 1].GetComponent<CharacterSelectLogic>().currentChar].transform.localPosition.z);
+        }
+    }
    
 }
