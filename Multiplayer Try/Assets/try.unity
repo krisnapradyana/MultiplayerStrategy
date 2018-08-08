@@ -315,6 +315,11 @@ Prefab:
       propertyPath: m_TagString
       value: AttackerBody
       objectReference: {fileID: 0}
+    - target: {fileID: 64058831230692404, guid: 72fe8464b0e318942a19a1e88a535c5c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72fe8464b0e318942a19a1e88a535c5c, type: 2}
   m_IsPrefabAsset: 0
@@ -1991,7 +1996,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4206806713497652, guid: 72fe8464b0e318942a19a1e88a535c5c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -42.468475
+      value: -25.3
       objectReference: {fileID: 0}
     - target: {fileID: 4206806713497652, guid: 72fe8464b0e318942a19a1e88a535c5c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3147,6 +3152,11 @@ Prefab:
       propertyPath: m_TagString
       value: AttackerBody
       objectReference: {fileID: 0}
+    - target: {fileID: 64058831230692404, guid: 72fe8464b0e318942a19a1e88a535c5c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72fe8464b0e318942a19a1e88a535c5c, type: 2}
   m_IsPrefabAsset: 0
@@ -4262,6 +4272,11 @@ Prefab:
     - target: {fileID: 1402413519588784, guid: 72fe8464b0e318942a19a1e88a535c5c, type: 2}
       propertyPath: m_TagString
       value: AttackerBody
+      objectReference: {fileID: 0}
+    - target: {fileID: 64058831230692404, guid: 72fe8464b0e318942a19a1e88a535c5c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72fe8464b0e318942a19a1e88a535c5c, type: 2}
