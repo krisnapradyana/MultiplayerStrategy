@@ -17,8 +17,9 @@ public class StrategyModeUI : MonoBehaviour
 
     public int IndexHoldMoving;
     public List<CharacterBehaviour> SaveCharMove;
+    public static bool ChangeMove;
 
-    private void Awake()
+    private void Awake() 
     {
         instace = this;
     }
@@ -41,6 +42,7 @@ public class StrategyModeUI : MonoBehaviour
     void Update()
     {
         EndStrategyButtonManager();
+       
     }
 
     /// <summary>
@@ -159,12 +161,19 @@ public class StrategyModeUI : MonoBehaviour
         if (IndexHoldMoving == 2)
         {
             IndexHoldMoving = 0;
+            /*
             for (int i = 0; i < SaveCharMove.Count; i++)
             {
                 SaveCharMove[i].stateID = CharacterBehaviour.states.Moving;
             }
-            
-      
+            */
+            SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
+            if (SaveCharMove.Count > 1)
+            {
+                StartCoroutine(DelayMove());
+            }
+ 
+     
         }
     }
 
@@ -178,9 +187,7 @@ public class StrategyModeUI : MonoBehaviour
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().tarDir = ManagerTurnBase.PrevDir;
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().AssignDirection(ManagerTurnBase.PrevIndexEnumDir);
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().Moving(ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().stateID);
-        //ManagerTurnBase.PrevDir = ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().tarDir; // tambahan efath
-        //ManagerTurnBase.PlayerManager[ (int)ManagerTurnBase.stateID -1].transform.GetChild((int)ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().currentChar).transform.position = Vector3.MoveTowards(ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].transform.GetChild((int)ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().currentChar).transform.position, dir.tarDir, Speed * Time.deltaTime);
-        // ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<CharacterBehaviour>().stateID = CharacterBehaviour.states.CheckDirection;
+     
         StrategyModeUI.instace.StrategyUI[3].gameObject.SetActive(false);
       
 
@@ -192,18 +199,19 @@ public class StrategyModeUI : MonoBehaviour
         Debug.Log("masukUndo");
     }
 
-    public void ManageFixMove()
+    IEnumerator DelayMove()
     {
-        if (ManagerTurnBase.FixMove)
-        {
-            for (int j = 0; j < ManagerCharSelectLogic.CharacterPoint.Length; j++)
-            {
-                for (int i = 0; i < ManagerCharSelectLogic.CharacterPoint[ManagerChar.instance.CharIndexGlobal].GetComponent<DirectionControl>().movTrigger.dirDetector.Length; i++)
-                {
-                    ManagerCharSelectLogic.CharacterPoint[j].GetComponent<DirectionControl>().movTrigger.dirDetector[i].gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        Debug.Log("2");
+        SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
+ 
+    }
 
-                }
-            }
+    void DelayMove2()
+    {
+        if (SaveCharMove[0].stateID == CharacterBehaviour.states.CheckDirection)
+        {
+            SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
         }
     }
 }

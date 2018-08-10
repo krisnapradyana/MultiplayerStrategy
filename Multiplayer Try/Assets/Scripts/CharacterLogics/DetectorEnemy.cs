@@ -8,10 +8,13 @@ public class DetectorEnemy : MonoBehaviour {
     public string UnloadName;
 
     public bool OnceAddScene;
+
+    CharacterBehaviour CharBehav;
     // Use this for initialization
     void Start() {
 
         SceneManager.activeSceneChanged += ChangedActiveScene;
+        CharBehav = GetComponent<CharacterBehaviour>();
        }
         // Update is called once per frame
         void Update () {
@@ -49,13 +52,15 @@ public class DetectorEnemy : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "AttackerBody" && !OnceAddScene)
+        if (other.gameObject.tag == "AttackerBody" && !OnceAddScene )
         {
 
             if (LoadName != "")
             {
+                PlayerPrefs.SetInt("AttackerSpeed",other.gameObject.GetComponentInParent<CharacterData>().Speed);
+                PlayerPrefs.SetInt("DefenderSpeed", GetComponent<CharacterData>().Speed);
+
                 SceneManage.instace.load(LoadName);
-                Debug.Log("Load Scene ");
 
             }
             if (UnloadName != "")

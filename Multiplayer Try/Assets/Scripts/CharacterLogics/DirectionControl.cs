@@ -49,7 +49,26 @@ public class DirectionControl : MonoBehaviour {
             return;
         }
         charBehave.stateID = CharacterBehaviour.states.HoldMoving;
-        StrategyModeUI.instace.SaveCharMove.Add(charBehave);
+        
+        if (StrategyModeUI.instace.SaveCharMove.Count == 0)
+        {
+            StrategyModeUI.instace.SaveCharMove.Add(charBehave);
+        } else 
+        {
+            if (StrategyModeUI.instace.SaveCharMove[0].Speed < charBehave.Speed)
+            {
+                CharacterBehaviour Temp;
+                Temp = StrategyModeUI.instace.SaveCharMove[0];
+                StrategyModeUI.instace.SaveCharMove.Remove(StrategyModeUI.instace.SaveCharMove[0]);
+                StrategyModeUI.instace.SaveCharMove.Add(charBehave);
+                StrategyModeUI.instace.SaveCharMove.Add(Temp);
+            }
+            else {
+                StrategyModeUI.instace.SaveCharMove.Add(charBehave);
+            }
+            
+            
+        }
         charBehave.stateMachine.Update();
         tarDir = movTrigger.dirDetector[_triggerIndex].transform.position;
         
@@ -71,9 +90,10 @@ public class DirectionControl : MonoBehaviour {
     /// </summary>
     public void AssignDeffense()
     {
+      
         charBehave.stateID = CharacterBehaviour.states.DeffensePosition;
         charBehave.stateMachine.Update();
-        tarDir = CameraRaycastPointer.hittedObject.transform.position;
+        tarDir = CameraRaycastPointer.PosisitionPoints;
     }
 
     public void AssignAttacker()
@@ -82,7 +102,7 @@ public class DirectionControl : MonoBehaviour {
         charBehave.stateID = CharacterBehaviour.states.AttackerPosition;
       
         charBehave.stateMachine.Update();
-        tarDir = CameraRaycastPointer.hittedObject.transform.position;
+        tarDir = CameraRaycastPointer.PosisitionPoints;
 
         for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
         {

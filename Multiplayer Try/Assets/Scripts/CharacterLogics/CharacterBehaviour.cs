@@ -109,10 +109,10 @@ public class CharacterBehaviour : MonoBehaviour
 
 
             StrategyModeUI.instace.SaveCharMove.Remove(this);
-         
+
 
             _stateID = states.CheckDirection;
-
+           
         }
         else return;
     }
@@ -126,16 +126,18 @@ public class CharacterBehaviour : MonoBehaviour
     public void DefensePosisition(TurnBaseController.states _stateID,states _StattesSID)
     {
         if (_stateID == TurnBaseController.states.StrategyMode && _StattesSID == states.DeffensePosition)
-        { 
-      
+        {
+        
             ManagerPointManager.IndexLimit = (int)ManagerCharSelectLogic.currentChar;
 
-            if (ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit] || CameraRaycastPointer.hittedObject.transform.tag != "Points" || ManagerPointManager.TotalPlaced > 3)
+            
+            if (ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit] ||  ManagerPointManager.TotalPlaced > 3)
             {
-
+                stateID = states.CheckDirection;
                 return;
             }
-
+            
+            Debug.Log(CameraRaycastPointer.PosisitionPoints);
             ManagerPointManager.PrevIndexLimitCollect.Add(ManagerPointManager.IndexLimit);
             ManagerPointManager.PrevLimit = ManagerPointManager.PrevIndexLimitCollect[ManagerPointManager.PrevIndexLimitCollect.Count - 1];
 
@@ -144,7 +146,8 @@ public class CharacterBehaviour : MonoBehaviour
             ManagerPointManager.CheckPlaced[ManagerPointManager.IndexLimit] = true;
             ManagerPointManager.TotalPlaced += 1;
 
-            ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].transform.position = CameraRaycastPointer.hittedObject.transform.position;
+            // ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].transform.position = CameraRaycastPointer.hittedObject.transform.position;
+            ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].transform.position = CameraRaycastPointer.PosisitionPoints;
             for (int i = 0; i < ManagerCharSelectLogic.CharacterPoint[ManagerChar.instance.CharIndexGlobal].GetComponent<DirectionControl>().movTrigger.dirDetector.Length; i++)
             {
                 ManagerCharSelectLogic.CharacterPoint[ManagerPointManager.IndexLimit].GetComponent<DirectionControl>().movTrigger.dirDetector[i].gameObject.SetActive(false);
@@ -203,25 +206,22 @@ public class CharacterBehaviour : MonoBehaviour
 
         else if (_stateID == TurnBaseController.states.Attacker && _StattesSID == states.AttackerPosition)
         {
-            if (CameraRaycastPointer.hittedObject.transform.tag == "Points" && (CameraRaycastPointer.hittedObject.transform.name == "RightPoint1" || CameraRaycastPointer.hittedObject.transform.name == "RightPoint2" ||  CameraRaycastPointer.hittedObject.transform.name == "RightPoint3") && turnController.AttackFirstPos[(int)ManagerCharSelectLogic.currentChar] == false)
-            {
+           
+
+             
+                ManagerCharSelectLogic.CharacterPoint[(int)ManagerCharSelectLogic.currentChar].transform.position = CameraRaycastPointer.PosisitionPoints;
                 
-                ManagerCharSelectLogic.CharacterPoint[(int)ManagerCharSelectLogic.currentChar].transform.position = CameraRaycastPointer.hittedObject.transform.position;
-
-                /*
-                for (int i = 0; i < ManagerCharSelectLogic.switchCharacters.Length; i++)
-                {
-                    ManagerCharSelectLogic.switchCharacters[i].interactable = false;
-                }
-                */
-
+       
                 turnController.AttackFirstPos[(int)ManagerCharSelectLogic.currentChar] = true;
                 stateID = states.CheckDirection;
                 turnController.FixMove = true;
 
-             
-                //Debug.Log("Enter Attacker Position");
+            /*
+            if (CameraRaycastPointer.hittedObject.transform.tag == "Points" && (CameraRaycastPointer.hittedObject.transform.name == "RightPoint1" || CameraRaycastPointer.hittedObject.transform.name == "RightPoint2" || CameraRaycastPointer.hittedObject.transform.name == "RightPoint3") && turnController.AttackFirstPos[(int)ManagerCharSelectLogic.currentChar] == false)
+            {
+
             }
+            */
         }
     }
 }

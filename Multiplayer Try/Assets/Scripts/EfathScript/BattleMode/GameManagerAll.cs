@@ -6,6 +6,15 @@ public class GameManagerAll : MonoBehaviour {
 
     public static GameManagerAll _instance;
 
+    public GameObject CharPrefabAttacker;
+    public GameObject CharPrefabDefense;
+
+    public CharacterBehaviour CharBehaveAttacker;
+    public CharacterBehaviour CharBehaveDefense;
+
+    public DirectionControl CharDirectAttacker;
+    public DirectionControl CharDirectDefense;
+
     private void Awake()
     {
         
@@ -22,8 +31,8 @@ public class GameManagerAll : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-    
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
