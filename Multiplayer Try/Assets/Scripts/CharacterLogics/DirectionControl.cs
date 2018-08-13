@@ -19,6 +19,7 @@ public class DirectionControl : MonoBehaviour {
 
     //public static bool moveAvailable;
     public Vector3 tarDir;
+    public Vector3 PrevtarDir;
     public CharacterBehaviour charBehave;
     public MovementTrigger movTrigger = new MovementTrigger();
 
@@ -70,6 +71,7 @@ public class DirectionControl : MonoBehaviour {
             
         }
         charBehave.stateMachine.Update();
+        PrevtarDir = tarDir;
         tarDir = movTrigger.dirDetector[_triggerIndex].transform.position;
         
 

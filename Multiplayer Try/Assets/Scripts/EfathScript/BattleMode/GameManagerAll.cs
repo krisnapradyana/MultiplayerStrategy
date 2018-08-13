@@ -6,14 +6,18 @@ public class GameManagerAll : MonoBehaviour {
 
     public static GameManagerAll _instance;
 
+    public TurnBaseController TurnManager;
+
+    [Space]
     public GameObject CharPrefabAttacker;
     public GameObject CharPrefabDefense;
+    public int[] CharPrefabIndex;
 
-    public CharacterBehaviour CharBehaveAttacker;
-    public CharacterBehaviour CharBehaveDefense;
 
-    public DirectionControl CharDirectAttacker;
-    public DirectionControl CharDirectDefense;
+    [Space]
+    public int[] AttackerData; //speed,damage,defense,health
+    public int[] DefenderData; //speed,damage,defense,health
+
 
     private void Awake()
     {
@@ -31,7 +35,7 @@ public class GameManagerAll : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+        TurnManager = FindObjectOfType<TurnBaseController>();
     }
 	
 	// Update is called once per frame

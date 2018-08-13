@@ -7,6 +7,10 @@ public class ManagerChar : MonoBehaviour {
    public List<GameObject> CharIndex;
     
     public  int CharIndexGlobal;
+
+    public GameObject BattleModeUI;
+    public GameObject StrategyModeUI;
+    // public Camera[] Camera
     // Use this for initialization
     public void Awake()
     {
@@ -14,8 +18,9 @@ public class ManagerChar : MonoBehaviour {
     }
 
     void Start () {
-		
-	}
+        BattleModeUI.SetActive(false);
+        StrategyModeUI.SetActive(true);
+    }
 	
 	// Update is called once per frame
 	void Update () {

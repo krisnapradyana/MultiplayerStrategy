@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CharacterData : MonoBehaviour {
 
-    public int Speed;
+    public int[] CharData; //speed,dmg,def, health
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

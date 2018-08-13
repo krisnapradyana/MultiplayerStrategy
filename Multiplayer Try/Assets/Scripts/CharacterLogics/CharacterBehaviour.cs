@@ -98,7 +98,7 @@ public class CharacterBehaviour : MonoBehaviour
        
         if (_stateID == states.Moving)
         {
-           
+            turnController.PrevDir = this.transform.position;
            // turnController.PrevDir = ManagerCharSelectLogic.CharacterPoint[turnController.PrevIndexChar].GetComponent<DirectionControl>().tarDir; // tambahan efath
             this.transform.position = Vector3.MoveTowards(this.transform.position, dir.tarDir, Speed * Time.deltaTime);
 

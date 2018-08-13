@@ -10,9 +10,17 @@ public class SceneManage : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        instace = this;
+        if (instace == null)
+        {
+            instace = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         load("try");
-        UnLoad("coreGameplay");
+       UnLoad("coreGameplay");
 	}
 	
 	// Update is called once per frame
@@ -26,7 +34,7 @@ public class SceneManage : MonoBehaviour {
             if (!SceneManager.GetSceneByName(NamaScene).isLoaded)
         {
             
-            Fade.SetTrigger("FadeOut");
+           // Fade.SetTrigger("FadeOut");
             SceneManager.LoadScene(NamaScene,LoadSceneMode.Additive);
             
         }
@@ -37,9 +45,11 @@ public class SceneManage : MonoBehaviour {
     {
         
             if (SceneManager.GetSceneByName(NamaScene).isLoaded)
-        {
-            SceneManager.UnloadScene(NamaScene);
-        }
+              {
+             
+                      SceneManager.UnloadSceneAsync(NamaScene);
+                  //   SceneManager.SetActiveScene(SceneManager.GetSceneByName(NamaScene));
+             }
 
     }
 }

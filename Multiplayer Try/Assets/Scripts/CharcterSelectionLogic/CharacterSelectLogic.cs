@@ -10,11 +10,14 @@ public class CharacterSelectLogic : MonoBehaviour {
    
     public GameObject[] CharacterPoint;
     public TurnBaseController ManagerTurnController;
+    public bool[] DeadOrLife;
     //Tambahan Efath
     
     public DirectionControl[] charactersControl;
     public Button[] switchCharacters;
     public Button[] directionalButtons;
+
+    
 
     public enum character
     {
@@ -56,6 +59,7 @@ public class CharacterSelectLogic : MonoBehaviour {
     {
         Debug.Log("Current Char : " + currentChar.ToString());
         AcceptInputs();
+        DeadCharButton();
     }
 
     public void AssignCharacterControls()
@@ -127,6 +131,17 @@ public class CharacterSelectLogic : MonoBehaviour {
 
             
         
+        }
+    }
+
+    void DeadCharButton()
+    {
+        for (int i = 0; i < DeadOrLife.Length; i++)
+        {
+            if (DeadOrLife[i] == true)
+            {
+                switchCharacters[i].interactable = false;
+            }
         }
     }
 

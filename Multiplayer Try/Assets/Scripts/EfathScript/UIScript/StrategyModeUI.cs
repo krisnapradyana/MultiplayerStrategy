@@ -143,7 +143,7 @@ public class StrategyModeUI : MonoBehaviour
        
         ManagerTurnBase.endTurn = true;
         ManagerTurnBase.FixMove = false;
-
+        GameManagerAll._instance.CharPrefabIndex[(int)ManagerTurnBase.stateID - 1] = (int) ManagerCharSelectLogic.currentChar;
 
         //ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>();
         /*
@@ -187,8 +187,8 @@ public class StrategyModeUI : MonoBehaviour
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().tarDir = ManagerTurnBase.PrevDir;
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().AssignDirection(ManagerTurnBase.PrevIndexEnumDir);
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().Moving(ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().stateID);
-     
-        StrategyModeUI.instace.StrategyUI[3].gameObject.SetActive(false);
+        
+        //StrategyModeUI.instace.StrategyUI[3].gameObject.SetActive(false);
       
 
         for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
@@ -201,10 +201,14 @@ public class StrategyModeUI : MonoBehaviour
 
     IEnumerator DelayMove()
     {
-        yield return new WaitForSeconds(1f);
-        Debug.Log("2");
-        SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
- 
+        if (ManagerTurnBase.stateID != TurnBaseController.states.BattleMode)
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log("2");
+            SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
+        }
+        
+                
     }
 
     void DelayMove2()

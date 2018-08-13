@@ -11,7 +11,7 @@ public class TurnBaseController : MonoBehaviour {
     public enum states
     {
         NullState = 0,
-        Defender, Attacker, StrategyMode
+        Defender, Attacker, StrategyMode, BattleMode
     }
 
 

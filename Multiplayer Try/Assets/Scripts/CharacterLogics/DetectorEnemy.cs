@@ -47,7 +47,26 @@ public class DetectorEnemy : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.tag == "AttackerBody" && !OnceAddScene)
+        {
+            CharBehav.turnController.stateID = TurnBaseController.states.BattleMode;
+            if (LoadName != "")
+            {
+                GameManagerAll._instance.CharPrefabAttacker = other.gameObject;
+                GameManagerAll._instance.CharPrefabDefense = transform.gameObject;
+                ManagerChar.instance.BattleModeUI.SetActive(true);
+                ManagerChar.instance.StrategyModeUI.SetActive(false); 
+                SceneManage.instace.load(LoadName);
+
+
+            }
+            if (UnloadName != "")
+            {
+               // StartCoroutine(DelayTime());
+            }
+            OnceAddScene = true;
+     
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -57,15 +76,21 @@ public class DetectorEnemy : MonoBehaviour {
 
             if (LoadName != "")
             {
-                PlayerPrefs.SetInt("AttackerSpeed",other.gameObject.GetComponentInParent<CharacterData>().Speed);
-                PlayerPrefs.SetInt("DefenderSpeed", GetComponent<CharacterData>().Speed);
+                //  PlayerPrefsx.("AttackerSpeed",other.gameObject.GetComponentInParent<CharacterData>().Speed);
+             
+                PlayerPrefsX.SetIntArray("DefenderData", GetComponent<CharacterData>().CharData);
+                PlayerPrefsX.SetIntArray("AttackerData", other.gameObject.GetComponentInParent<CharacterData>().CharData);
 
-                SceneManage.instace.load(LoadName);
+                GameManagerAll._instance.AttackerData = GetComponent<CharacterData>().CharData;
+                GameManagerAll._instance.DefenderData = other.gameObject.GetComponentInParent<CharacterData>().CharData;
+            
+              //  SceneManage.instace.load(LoadName);
+               // SceneManage.instace.UnLoad("try");
 
             }
             if (UnloadName != "")
             {
-                StartCoroutine(DelayTime());
+              //  StartCoroutine(DelayTime());
             }
 
             OnceAddScene = true;
@@ -76,7 +101,7 @@ public class DetectorEnemy : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        
+        OnceAddScene = false;
 
     }
 }
