@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 public class StrategyModeUI : MonoBehaviour
 {
 
@@ -17,7 +17,11 @@ public class StrategyModeUI : MonoBehaviour
 
     public int IndexHoldMoving;
     public List<CharacterBehaviour> SaveCharMove;
+    public List<int> SaveCharMoveIndexDetect;
     public static bool ChangeMove;
+
+    
+  
 
     private void Awake() 
     {
@@ -42,7 +46,9 @@ public class StrategyModeUI : MonoBehaviour
     void Update()
     {
         EndStrategyButtonManager();
-       
+        HoldMoveSecond();
+
+
     }
 
     /// <summary>
@@ -143,36 +149,47 @@ public class StrategyModeUI : MonoBehaviour
        
         ManagerTurnBase.endTurn = true;
         ManagerTurnBase.FixMove = false;
-        GameManagerAll._instance.CharPrefabIndex[(int)ManagerTurnBase.stateID - 1] = (int) ManagerCharSelectLogic.currentChar;
+       // GameManagerAll._instance.CharPrefabIndex[(int)ManagerTurnBase.stateID - 1] = (int) ManagerCharSelectLogic.currentChar;
 
-        //ManagerCharSelectLogic = FindObjectOfType<CharacterSelectLogic>();
-        /*
-        for (int i = 0; i < ManagerCharSelectLogic.switchCharacters.Length; i++)
-        {
-            ManagerTurnBase.PlayerManager[(int)ManagerTurnBase.stateID - 1].GetComponent<CharacterSelectLogic>().switchCharacters[i].interactable = true;
-        }
-        */
+        
 
         for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
         {
 
             ManagerChar.instance.CharIndex[i].GetComponent<Button>().interactable = true;
         }
+
         if (IndexHoldMoving == 2)
         {
             IndexHoldMoving = 0;
-            /*
-            for (int i = 0; i < SaveCharMove.Count; i++)
+
+            if (SaveCharMove.Count == 0)
             {
-                SaveCharMove[i].stateID = CharacterBehaviour.states.Moving;
+                return;
             }
-            */
-            SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
-            if (SaveCharMove.Count > 1)
+
             {
-                StartCoroutine(DelayMove());
+                SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
+                SaveCharMoveIndexDetect.Remove(SaveCharMoveIndexDetect[0]);
+
+                if (SaveCharMove.Count > 1)
+                {
+                    if (!SaveCharMove[0].GetComponent<DirectionControl>().movTrigger.dirDetector[SaveCharMoveIndexDetect[0]].GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected)
+                    {
+                        Debug.Log("masuk Ganti move");
+                        StartCoroutine(DelayMove());
+                    }
+                    else if (SaveCharMove[0].GetComponent<DirectionControl>().movTrigger.dirDetector[SaveCharMoveIndexDetect[0]].GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected)
+                    {
+                        GameManagerAll._instance.HoldMovingChar = false;
+                      
+                        Debug.Log("masuk hold musuh");
+                    }
+                }
+                
+                   
+
             }
- 
      
         }
     }
@@ -187,10 +204,7 @@ public class StrategyModeUI : MonoBehaviour
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().tarDir = ManagerTurnBase.PrevDir;
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<DirectionControl>().AssignDirection(ManagerTurnBase.PrevIndexEnumDir);
         ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().Moving(ManagerCharSelectLogic.CharacterPoint[ManagerTurnBase.PrevIndexChar].GetComponent<CharacterBehaviour>().stateID);
-        
-        //StrategyModeUI.instace.StrategyUI[3].gameObject.SetActive(false);
-      
-
+     
         for (int i = 0; i < ManagerChar.instance.CharIndex.Count; i++)
         {
 
@@ -199,23 +213,36 @@ public class StrategyModeUI : MonoBehaviour
         Debug.Log("masukUndo");
     }
 
+
+
     IEnumerator DelayMove()
     {
-        if (ManagerTurnBase.stateID != TurnBaseController.states.BattleMode)
-        {
-            yield return new WaitForSeconds(1f);
-            Debug.Log("2");
-            SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
-        }
+
+        yield return new WaitForSeconds(1f);
+ 
+        SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
         
-                
+            SaveCharMoveIndexDetect.Remove(SaveCharMoveIndexDetect[0]);
+        
+
     }
 
-    void DelayMove2()
+
+
+
+    void HoldMoveSecond()
     {
-        if (SaveCharMove[0].stateID == CharacterBehaviour.states.CheckDirection)
+        if (SaveCharMove.Count>0)
         {
-            SaveCharMove[0].stateID = CharacterBehaviour.states.Moving;
+            if (GameManagerAll._instance.HoldMovingChar == true)
+            {
+             
+                StartCoroutine(DelayMove());
+                // GameManagerAll._instance.HoldMovingChar = false;
+            }
         }
+        GameManagerAll._instance.HoldMovingChar = false;
+
     }
+
 }

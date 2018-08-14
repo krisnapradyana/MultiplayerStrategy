@@ -54,6 +54,10 @@ public class DetectorEnemy : MonoBehaviour {
             {
                 GameManagerAll._instance.CharPrefabAttacker = other.gameObject;
                 GameManagerAll._instance.CharPrefabDefense = transform.gameObject;
+
+                GameManagerAll._instance.CharPrefabIndex[0] = GameManagerAll._instance.CharPrefabDefense.GetComponent<CharacterData>().IndexChar;
+                GameManagerAll._instance.CharPrefabIndex[1] = GameManagerAll._instance.CharPrefabAttacker.GetComponentInParent<CharacterData>().IndexChar;
+
                 ManagerChar.instance.BattleModeUI.SetActive(true);
                 ManagerChar.instance.StrategyModeUI.SetActive(false); 
                 SceneManage.instace.load(LoadName);

@@ -18,6 +18,8 @@ public class GameManagerAll : MonoBehaviour {
     public int[] AttackerData; //speed,damage,defense,health
     public int[] DefenderData; //speed,damage,defense,health
 
+    public bool HoldMovingChar;
+
 
     private void Awake()
     {

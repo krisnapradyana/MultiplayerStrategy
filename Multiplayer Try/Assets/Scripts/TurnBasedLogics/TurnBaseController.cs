@@ -29,10 +29,28 @@ public class TurnBaseController : MonoBehaviour {
 
     public states stateID;
     public bool endTurn;
-   
 
-	// Use this for initialization
-	void Start () {
+    public static TurnBaseController instace;
+
+
+    private void Awake()
+    {
+
+        if (instace == null)
+        {
+            instace = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+
+    // Use this for initialization
+    void Start () {
         stateID = states.NullState;
         stateMachine = new StateMachine<TurnBaseController>(this);
         stateMachine.ChangeState(FirstPlayerTurn.Instance);

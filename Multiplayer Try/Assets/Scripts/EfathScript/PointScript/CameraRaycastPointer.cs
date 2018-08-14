@@ -153,8 +153,12 @@ public class CameraRaycastPointer : MonoBehaviour {
 
                 return;
             }
+            if (PosisitionPointindex == 6 || PosisitionPointindex == 7 || PosisitionPointindex == 8)
+            {
+                ManagerTurnControl.PlayerManager[1].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<DirectionControl>().AssignAttacker();
+            }
 
-            ManagerTurnControl.PlayerManager[1].GetComponent<CharacterSelectLogic>().transform.GetChild((int)ManagerTurnControl.PlayerManager[0].GetComponent<CharacterSelectLogic>().currentChar).GetComponent<DirectionControl>().AssignAttacker();
+           
             //  ManagerDirectionControl.AssignAttacker();
         }
 

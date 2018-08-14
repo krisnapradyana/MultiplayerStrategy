@@ -66,7 +66,7 @@ public class CharacterSelectLogic : MonoBehaviour {
     {
         //Debug.Log("Assigning Character control");
         if (currentChar == character.FirstCharacter)
-        {
+        {   
             directionalButtons[(int)DirectionControl.Directions.up].onClick.AddListener(delegate { charactersControl[(int)currentChar].AssignDirection((int)DirectionControl.Directions.up); });
             directionalButtons[(int)DirectionControl.Directions.down].onClick.AddListener(delegate { charactersControl[(int)currentChar].AssignDirection((int)DirectionControl.Directions.down); });
             directionalButtons[(int)DirectionControl.Directions.left].onClick.AddListener(delegate { charactersControl[(int)currentChar].AssignDirection((int)DirectionControl.Directions.left); });

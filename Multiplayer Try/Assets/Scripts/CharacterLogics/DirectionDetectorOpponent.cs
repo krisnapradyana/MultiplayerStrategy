@@ -5,9 +5,12 @@ using UnityEngine;
 public class DirectionDetectorOpponent : MonoBehaviour {
 
     DirectionDetector ManagerDirectionDetector;
+    public GameObject FriendObject;
+    public GameObject EnemyObject;
     public bool OpponentTouchChild ;
-	// Use this for initialization
-	void Start () {
+    public bool EnemyDetected;
+    // Use this for initialization
+    void Start () {
         ManagerDirectionDetector = GetComponentInParent<DirectionDetector>();
         OpponentTouchChild = false;
 	}
@@ -28,10 +31,18 @@ public class DirectionDetectorOpponent : MonoBehaviour {
                 ManagerDirectionDetector.OpponentTouch = true;
                 //  dirPosition = other.transform.position;
                 //  triggerColor.color = Color.green;
+                FriendObject = other.transform.gameObject;
+                
             }
-            else 
+            else if (other.transform.tag == "Attacker")
+            {
+                EnemyDetected = true;
+                EnemyObject = other.transform.gameObject;
+                //  dirPosition = other.transform.position;
+                //  triggerColor.color = Color.green;
+            }
 
-                return;
+            return;
         }
         else if (GetComponentInParent<CharacterBehaviour>().stateTypeID == CharacterBehaviour.statesType.Attacker)
         {
@@ -41,8 +52,15 @@ public class DirectionDetectorOpponent : MonoBehaviour {
                 ManagerDirectionDetector.OpponentTouch = true;
                 //  dirPosition = other.transform.position;
                 //  triggerColor.color = Color.green;
+                FriendObject = other.transform.gameObject;
             }
-            else 
+            else if (other.transform.tag == "Defender")
+            {
+                EnemyDetected = true;
+                EnemyObject = other.transform.gameObject;
+                //  dirPosition = other.transform.position;
+                //  triggerColor.color = Color.green;
+            }
             return;
         }
     }
@@ -61,9 +79,15 @@ public class DirectionDetectorOpponent : MonoBehaviour {
                 ManagerDirectionDetector.dirPosition = this.transform.position; //if no object collided
                 ManagerDirectionDetector.triggerColor.color = Color.yellow;
 
+              //  other.transform.GetComponentInParent<DirectionDetector>().OpponentTouch = false;
             }
-            else
-                return;
+            else if (other.transform.tag == "Attacker")
+            {
+                EnemyDetected = false;
+                //  dirPosition = other.transform.position;
+                //  triggerColor.color = Color.green;
+            }
+            return;
         }
         else if (GetComponentInParent<CharacterBehaviour>().stateTypeID == CharacterBehaviour.statesType.Attacker)
         {
@@ -74,9 +98,15 @@ public class DirectionDetectorOpponent : MonoBehaviour {
                 ManagerDirectionDetector.dirPosition = this.transform.position; //if no object collided
                 ManagerDirectionDetector.triggerColor.color = Color.yellow;
 
+               // other.transform.GetComponentInParent<DirectionDetector>().OpponentTouch = false;
             }
-            else
-                return;
+            else  if (other.transform.tag == "Defender")
+            {
+                EnemyDetected = false;
+                //  dirPosition = other.transform.position;
+                //  triggerColor.color = Color.green;
+            }
+            return;
           
         }
 

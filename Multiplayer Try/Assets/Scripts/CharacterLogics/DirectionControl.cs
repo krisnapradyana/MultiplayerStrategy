@@ -21,6 +21,7 @@ public class DirectionControl : MonoBehaviour {
     public Vector3 tarDir;
     public Vector3 PrevtarDir;
     public CharacterBehaviour charBehave;
+  
     public MovementTrigger movTrigger = new MovementTrigger();
 
     private void Initialize()
@@ -50,10 +51,12 @@ public class DirectionControl : MonoBehaviour {
             return;
         }
         charBehave.stateID = CharacterBehaviour.states.HoldMoving;
+        StrategyModeUI.instace.SaveCharMoveIndexDetect.Add(_triggerIndex);
         
         if (StrategyModeUI.instace.SaveCharMove.Count == 0)
         {
             StrategyModeUI.instace.SaveCharMove.Add(charBehave);
+      
         } else 
         {
             if (StrategyModeUI.instace.SaveCharMove[0].Speed < charBehave.Speed)

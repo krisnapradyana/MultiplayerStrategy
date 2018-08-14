@@ -109,7 +109,7 @@ public class CharacterBehaviour : MonoBehaviour
 
 
             StrategyModeUI.instace.SaveCharMove.Remove(this);
-
+          
 
             _stateID = states.CheckDirection;
            
