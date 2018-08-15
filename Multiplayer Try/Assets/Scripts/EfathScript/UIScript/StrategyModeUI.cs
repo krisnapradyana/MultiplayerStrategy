@@ -116,12 +116,12 @@ public class StrategyModeUI : MonoBehaviour
             EndStrategyPressed = true;
              StrategyUI[2].gameObject.SetActive(true);
             ManagerTurnBase.endTurn = true;
+            ManagerTurnBase.FixMove = true;
 
-           
             // SetActive Direction Control
 
-            
-            
+
+
             for (int j = 0; j < ManagerCharSelectLogic.CharacterPoint.Length; j++)
             {
                 for (int i = 0; i < ManagerCharSelectLogic.CharacterPoint[ManagerChar.instance.CharIndexGlobal].GetComponent<DirectionControl>().movTrigger.dirDetector.Length; i++)

@@ -11,7 +11,9 @@ public class ManagerBattleMode : MonoBehaviour {
     public int SaveSuitDefender;
 
     public Animator Anim;
-    // Use this for initialization
+
+    BattleIdentity ManagerBattleIdentity;
+    
 
     public enum Turn
     {
@@ -22,12 +24,12 @@ public class ManagerBattleMode : MonoBehaviour {
     public Turn TurnId;
 
     void Start() {
-       // Time.timeScale = 0;
+  
         Debug.Log("Masuk Battle Mode");
-        //  Instantiate(CobaPrefab, transform.position, transform.rotation);
+       
         TurnId = Turn.nullstate;
         TurnId = Turn.AttackTurn;
-        
+        ManagerBattleIdentity = FindObjectOfType<BattleIdentity>();
 
     }
 
@@ -77,8 +79,7 @@ public class ManagerBattleMode : MonoBehaviour {
                
                 GameManagerAll._instance.CharPrefabDefense.SetActive(false);
 
-                GameManagerAll._instance.TurnManager.stateID = TurnBaseController.states.Attacker;
-                SceneManage.instace.UnLoad("coreGameplay");
+              
          
             }
             else if (SaveSuitAttacker == 1 && SaveSuitDefender == 0)
@@ -93,10 +94,9 @@ public class ManagerBattleMode : MonoBehaviour {
                 GameManagerAll._instance.TurnManager.PlayerManager[0].GetComponent<CharacterSelectLogic>().enabled = false;
 
 
-                GameManagerAll._instance.CharPrefabAttacker.SetActive(false);
+                GameManagerAll._instance.CharPrefabAttacker.transform.parent.gameObject.SetActive(false);
 
-                GameManagerAll._instance.TurnManager.stateID = TurnBaseController.states.Attacker;
-                SceneManage.instace.UnLoad("coreGameplay");
+                
 
             }
             else if (SaveSuitAttacker == 0 && SaveSuitDefender == 1)
@@ -112,8 +112,7 @@ public class ManagerBattleMode : MonoBehaviour {
 
                 GameManagerAll._instance.CharPrefabDefense.SetActive(false);
 
-                GameManagerAll._instance.TurnManager.stateID = TurnBaseController.states.Attacker;
-                SceneManage.instace.UnLoad("coreGameplay");
+         
 
             }
             else if (SaveSuitAttacker == 0 && SaveSuitDefender == 2)
@@ -128,10 +127,9 @@ public class ManagerBattleMode : MonoBehaviour {
                 GameManagerAll._instance.TurnManager.PlayerManager[0].GetComponent<CharacterSelectLogic>().enabled = false;
 
 
-                GameManagerAll._instance.CharPrefabAttacker.SetActive(false);
+                GameManagerAll._instance.CharPrefabAttacker.transform.parent.gameObject.SetActive(false);
 
-                GameManagerAll._instance.TurnManager.stateID = TurnBaseController.states.Attacker;
-                SceneManage.instace.UnLoad("coreGameplay");
+                
             }
             else if (SaveSuitAttacker == 2 && SaveSuitDefender == 0)
             {
@@ -146,9 +144,8 @@ public class ManagerBattleMode : MonoBehaviour {
 
 
                 GameManagerAll._instance.CharPrefabDefense.SetActive(false);
-
-                GameManagerAll._instance.TurnManager.stateID = TurnBaseController.states.Attacker;
-                SceneManage.instace.UnLoad("coreGameplay");
+               
+               
 
             }
             else if (SaveSuitAttacker == 2 && SaveSuitDefender == 1)
@@ -157,18 +154,22 @@ public class ManagerBattleMode : MonoBehaviour {
 
                 ManageAttackOnBattle();
                 TurnOffDetectorOpponentAttacker();
+
                 GameManagerAll._instance.CharPrefabAttacker.transform.GetComponentInParent<CharacterSelectLogic>().DeadOrLife[(int)GameManagerAll._instance.CharPrefabIndex[1]] = true;
 
                 GameManagerAll._instance.TurnManager.PlayerManager[0].GetComponent<CharacterSelectLogic>().enabled = false;
 
 
-                GameManagerAll._instance.CharPrefabAttacker.SetActive(false);
-
-                GameManagerAll._instance.TurnManager.stateID = TurnBaseController.states.Attacker;
-                SceneManage.instace.UnLoad("coreGameplay");
+                GameManagerAll._instance.CharPrefabAttacker.transform.parent.gameObject.SetActive(false);
+               
+               
+               
             }
+
+            GameManagerAll._instance.TurnManager.stateID = TurnBaseController.states.Attacker;
+            //   SceneManage.instace.UnLoad("coreGameplay");
+           
             
-            GameManagerAll._instance.HoldMovingChar = true;
             
            
         }
@@ -176,35 +177,35 @@ public class ManagerBattleMode : MonoBehaviour {
 
     void ManageAttackOnBattle()
     {
-
-        //  GameManagerAll._instance.DefenderData[3] += GameManagerAll._instance.DefenderData[2] - GameManagerAll._instance.AttackerData[1];
        
         ManagerChar.instance.BattleModeUI.SetActive(false);
         ManagerChar.instance.StrategyModeUI.SetActive(true);
-        //StrategyModeUI.instace.UndoTurn();
-    
-        // PlayerPrefsX.SetIntArray("DefenderData", GetComponent<CharacterData>().CharData);
-        // PlayerPrefsX.SetIntArray("AttackerData", other.gameObject.GetComponentInParent<CharacterData>().CharData);
+       
     }
 
     void TurnOffDetectorOpponentAttacker( )
     {
+        int IndexOpponent;
+        ManagerBattleIdentity.DefenderMaterial.GetComponentInParent<Animator>().SetBool("Attack",true);
+       
+        StartCoroutine(JedaPindahScene());
+       
         for (int i = 1; i <= 4; i++)
         {
-            int IndexOpponent;
+            
             if (i % 2 == 0) {
                 IndexOpponent = i - 1;
             }
             else {
                 IndexOpponent = i + 1;
             }
-            if (GameManagerAll._instance.CharPrefabAttacker.GetComponent<DirectionControl>().movTrigger.dirDetector[i - 1].dirAvailable)
+            if (GameManagerAll._instance.CharPrefabAttacker.GetComponentInParent<DirectionControl>().movTrigger.dirDetector[i - 1].OpponentTouch)
             {
-                GameManagerAll._instance.CharPrefabAttacker.GetComponentInChildren<DirectionDetectorOpponent>().FriendObject.GetComponent<DirectionControl>().movTrigger.dirDetector[IndexOpponent].dirAvailable = false ;
+                GameManagerAll._instance.CharPrefabAttacker.GetComponentInParent<DirectionControl>().movTrigger.dirDetector[i - 1].GetComponentInChildren<DirectionDetectorOpponent>().FriendObject.GetComponent<DirectionControl>().movTrigger.dirDetector[IndexOpponent-1].OpponentTouch = false ;
             }
-            else if (GameManagerAll._instance.CharPrefabAttacker.GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected)
+            else if (GameManagerAll._instance.CharPrefabAttacker.GetComponentInParent<DirectionControl>().movTrigger.dirDetector[i - 1].GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected)
             {
-                GameManagerAll._instance.CharPrefabAttacker.GetComponentInChildren<DirectionDetectorOpponent>().EnemyObject.GetComponent<DirectionControl>().movTrigger.dirDetector[IndexOpponent].GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected = false;
+                GameManagerAll._instance.CharPrefabAttacker.GetComponentInParent<DirectionControl>().movTrigger.dirDetector[i - 1].GetComponentInChildren<DirectionDetectorOpponent>().EnemyObject.GetComponent<DirectionControl>().movTrigger.dirDetector[IndexOpponent - 1].GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected = false;
             }
         }
     }
@@ -212,6 +213,9 @@ public class ManagerBattleMode : MonoBehaviour {
     void TurnOffDetectorOpponentDefender( )
     {
         int IndexOpponent;
+        ManagerBattleIdentity.AttackerMaterial.GetComponentInParent<Animator>().SetBool("Attack", true);
+     
+        StartCoroutine(JedaPindahScene());
         for (int i = 1; i <= 4; i++)
         {
             
@@ -225,17 +229,25 @@ public class ManagerBattleMode : MonoBehaviour {
                 IndexOpponent = i + 1;
             }
 
-            if (!GameManagerAll._instance.CharPrefabDefense.GetComponent<DirectionControl>().movTrigger.dirDetector[i - 1].dirAvailable)
+            if (GameManagerAll._instance.CharPrefabDefense.GetComponent<DirectionControl>().movTrigger.dirDetector[i - 1].OpponentTouch)
             {
                 GameManagerAll._instance.CharPrefabDefense.GetComponent<DirectionControl>().movTrigger.dirDetector[i-1].GetComponentInChildren<DirectionDetectorOpponent>().FriendObject.GetComponent<DirectionControl>().movTrigger.dirDetector[IndexOpponent - 1].OpponentTouch = false;
             }
 
-            // pr belum selesai sama yang attack
-            else if (GameManagerAll._instance.CharPrefabDefense.GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected)
+          
+            else if (GameManagerAll._instance.CharPrefabDefense.GetComponent<DirectionControl>().movTrigger.dirDetector[i - 1].GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected)
             {
-             //   GameManagerAll._instance.CharPrefabDefense.GetComponent<DirectionControl>().movTrigger.dirDetector[i - 1].GetComponentInChildren<DirectionDetectorOpponent>().EnemyObject.GetComponent<DirectionControl>().movTrigger.dirDetector[IndexOpponent - 1].OpponentTouch = false;
+               
+                GameManagerAll._instance.CharPrefabDefense.GetComponent<DirectionControl>().movTrigger.dirDetector[i - 1].GetComponentInChildren<DirectionDetectorOpponent>().EnemyObject.GetComponent<DirectionControl>().movTrigger.dirDetector[IndexOpponent - 1].GetComponentInChildren<DirectionDetectorOpponent>().EnemyDetected = false;
             }
-            Debug.Log(IndexOpponent);
+            
         }
+    }
+
+    IEnumerator JedaPindahScene()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManage.instace.UnLoad("coreGameplay");
+        GameManagerAll._instance.HoldMovingChar = true;
     }
 }
