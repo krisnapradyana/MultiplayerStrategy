@@ -1,0 +1,99 @@
+{
+    "Items": [
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 2,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                2,
+                3,
+                8,
+                0
+            ],
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Mage",
+            "cardParent": {
+                "instanceID": -105962
+            }
+        },
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 2,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                1,
+                7,
+                8,
+                0
+            ],
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Mage",
+            "cardParent": {
+                "instanceID": -106100
+            }
+        },
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 1,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                6,
+                6,
+                7,
+                0
+            ],
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Warrior",
+            "cardParent": {
+                "instanceID": -106728
+            }
+        },
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 0,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                5,
+                8,
+                8,
+                0
+            ],
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Asssasin",
+            "cardParent": {
+                "instanceID": -106866
+            }
+        },
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 2,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                2,
+                2,
+                6,
+                0
+            ],
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Warrior",
+            "cardParent": {
+                "instanceID": -107008
+            }
+        }
+    ]
+}

@@ -153,6 +153,7 @@ using System.Collections.Generic;
             return SetFloatArray(key, new float[] { color.r, color.g, color.b, color.a });
         }
 
+        
         public static Color GetColor(String key)
         {
             var floatArray = GetFloatArray(key);
