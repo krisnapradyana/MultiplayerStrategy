@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterData : MonoBehaviour {
 
     public int[] CharData; //speed,dmg,def, health
+    public CardParent CharIden;
     public int IndexChar;
 
     // Use this for initialization

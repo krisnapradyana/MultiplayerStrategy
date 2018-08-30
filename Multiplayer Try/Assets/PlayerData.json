@@ -2,59 +2,106 @@
     "Items": [
         {
             "NameTypeCard": "Goblin",
-            "IndeParentCard": 2,
+            "IndeParentCard": 0,
             "Icon": {
                 "instanceID": 0
             },
             "Stats": [
                 2,
-                3,
-                8,
+                7,
+                7,
+                3
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
                 0
             ],
+            "BestStats": "",
             "StateRarity": 0,
             "StateID": 0,
-            "cardparentName": "Mage",
+            "cardparentName": "Tanker",
             "cardParent": {
-                "instanceID": -105962
+                "instanceID": -273808
             }
         },
         {
             "NameTypeCard": "Goblin",
-            "IndeParentCard": 2,
+            "IndeParentCard": 0,
             "Icon": {
                 "instanceID": 0
             },
             "Stats": [
+                4,
+                7,
                 1,
-                7,
-                8,
+                4
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
                 0
             ],
+            "BestStats": "",
             "StateRarity": 0,
             "StateID": 0,
-            "cardparentName": "Mage",
+            "cardparentName": "Tanker",
             "cardParent": {
-                "instanceID": -106100
+                "instanceID": -274276
             }
         },
         {
             "NameTypeCard": "Goblin",
-            "IndeParentCard": 1,
+            "IndeParentCard": 0,
             "Icon": {
                 "instanceID": 0
             },
             "Stats": [
-                6,
-                6,
-                7,
+                3,
+                4,
+                5,
+                3
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
                 0
             ],
+            "BestStats": "",
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Assasin",
+            "cardParent": {
+                "instanceID": -274832
+            }
+        },
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 0,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                7,
+                2,
+                7,
+                3
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "BestStats": "",
             "StateRarity": 0,
             "StateID": 0,
             "cardparentName": "Warrior",
             "cardParent": {
-                "instanceID": -106728
+                "instanceID": -275634
             }
         },
         {
@@ -65,34 +112,100 @@
             },
             "Stats": [
                 5,
-                8,
-                8,
+                7,
+                2,
+                4
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
                 0
             ],
+            "BestStats": "",
             "StateRarity": 0,
             "StateID": 0,
-            "cardparentName": "Asssasin",
+            "cardparentName": "Tanker",
             "cardParent": {
-                "instanceID": -106866
+                "instanceID": -276606
             }
         },
         {
             "NameTypeCard": "Goblin",
-            "IndeParentCard": 2,
+            "IndeParentCard": 0,
             "Icon": {
                 "instanceID": 0
             },
             "Stats": [
-                2,
-                2,
-                6,
+                7,
+                8,
+                5,
+                3
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
                 0
             ],
+            "BestStats": "",
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Tanker",
+            "cardParent": {
+                "instanceID": -277334
+            }
+        },
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 0,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                8,
+                7,
+                1,
+                4
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "BestStats": "",
             "StateRarity": 0,
             "StateID": 0,
             "cardparentName": "Warrior",
             "cardParent": {
-                "instanceID": -107008
+                "instanceID": -277842
+            }
+        },
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 0,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                5,
+                6,
+                4,
+                3
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "BestStats": "",
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Tanker",
+            "cardParent": {
+                "instanceID": -278376
             }
         }
     ]

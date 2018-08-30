@@ -6,25 +6,25 @@ using System.IO;
 
 public class ManagerCard : MonoBehaviour {
 
-
     public List<CardParent> CardIdentityCollection = new List<CardParent>();
-   
-    // Use this for initialization
+    public List<bool> CardIdentityChecked;
 
- 
+    public ManagerSelectCard selectCardMenu;
+
+    public static ManagerCard instance;
 
     public enum TypeCard {
-        nullstate = 0 
-            
-        , Mage , Asssasin, Warrior
+        nullstate = 0  , 
+         Warrior , Tanker, Assasin
+    }
 
-       }
 
     public enum StatsCard
     {
         nullstate = 0,
-        Attack, Defender, Speed
+        Attack, Defender, Speed, health
     }
+
 
     [System.Serializable]
     public class StatsCardClass
@@ -33,39 +33,28 @@ public class ManagerCard : MonoBehaviour {
         public int randomStats ;
     }
 
-
     public List<StatsCardClass> statsCollection = new List<StatsCardClass>();
 
     public List<TypeCard> StateId;
 
+    public GameObject MenuRandom;
+    public GameObject MenuChooseCard;
 
-
-	void Start () {
-        //RandomCard();
-
-      //  LoadCard();
+    private void Awake()
+    {
+        instance = this;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    void Start () {
+        MenuRandom.SetActive(true);
+        MenuChooseCard.SetActive(false);
+    }
 
     public void RandomCard()
     {
         statsCollection.Clear();
-        // int random = Random.Range(0,5);
-        int randomIndex = Random.Range(1,4);
-        int randomIndexIden = Random.Range(0,3);
 
-      // dmg, health, speed, agility, intelligence
-
-        
-        //StateId = (TypeCard)randomIndex;
-
-        
         CardParent cards = ScriptableObject.CreateInstance("CardParent") as CardParent;
-
         CardParent Cards = new CardParent();
 
         for (int i = 0; i < 3; i++)
@@ -73,11 +62,11 @@ public class ManagerCard : MonoBehaviour {
             statsCollection.Add(new StatsCardClass());
             statsCollection[i].randomStats = (Random.Range(1, 9));
             statsCollection[i].StateIdStatsCard = (StatsCard)i + 1;
+        }
 
-            // randomStats.Add(Random.Range(1, 9));
-            // randomStats[i] = Random.Range(1, 9);
-            //   cards.cardiden.Stats[i] = randomStats[i];
-
+        for (int i = 0; i < 3; i++)
+        {
+            cards.cardiden.Stats[i] = statsCollection[i].randomStats;
         }
 
         statsCollection.Sort(delegate (StatsCardClass a, StatsCardClass b) {
@@ -86,40 +75,40 @@ public class ManagerCard : MonoBehaviour {
 
         for (int i = 0; i < 3; i++)
         {
-            if (statsCollection[0].StateIdStatsCard == (StatsCard) i+1 )
+            if (statsCollection[2].StateIdStatsCard == (StatsCard) i+1 )
             {
                 cards.cardiden.cardparentName = ((TypeCard) i + 1).ToString();
                 cards.NameCardType = ((TypeCard)i + 1).ToString();
-                Debug.Log(cards.cardiden.cardparentName);
             }
-
-            cards.cardiden.Stats[i] = statsCollection[i].randomStats;
-            Debug.Log(cards.cardiden.Stats[i]);
+            cards.cardiden.StatsSort[i] = statsCollection[i].randomStats;
+            cards.cardiden.BestStats = statsCollection[i].StateIdStatsCard.ToString();
         }
 
-        cards.cardiden.StateID = (CardIdentity.ClassCard)cards.cardiden.IndeParentCard;
+        statsCollection.Add(new StatsCardClass());
+        statsCollection[3].randomStats = (Random.Range(3, 5));
+        statsCollection[3].StateIdStatsCard = (StatsCard)4;
+        cards.cardiden.Stats[3] = statsCollection[3].randomStats;
 
-        cards.cardiden.NameTypeCard = cards.cardiden.StateID.ToString();
-      
+        cards.cardiden.StateID = (CardIdentity.ClassCard)cards.cardiden.IndeParentCard;
+        cards.cardiden.NameTypeCard = cards.cardiden.StateID.ToString(); 
         cards.cardiden.cardParent = cards;
 
-        cards.cardiden.IndeParentCard = randomIndexIden;
-
         CardIdentityCollection.Add(cards);
+        CardIdentityChecked.Add(false);
 
         SaveCard(cards);
 
+        selectCardMenu.InserData = true;
+
+        MenuRandom.SetActive(false);
+        MenuChooseCard.SetActive(true); 
     }
+
 
     public void SaveCard(CardParent card)
     {
-   
-        //  PlayerPrefs.SetInt("TotalCard",TotalCard);
         PlayerPrefs.SetString("SaveCard" + CardIdentityCollection.Count, card.NameCardType);
         PlayerPrefs.SetInt("SaveCardInt" + CardIdentityCollection.Count,card.IndexCard);
-
-
-        //  List<int> a = new List<int>();
 
         CardIdentity[] car = new CardIdentity[CardIdentityCollection.Count];
 
@@ -131,22 +120,14 @@ public class ManagerCard : MonoBehaviour {
             car[i].cardparentName = CardIdentityCollection[i].NameCardType;
             car[i].cardParent = CardIdentityCollection[i];
 
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 4; j++)
             {
                 car[i].Stats[j] = CardIdentityCollection[i].cardiden.Stats[j];
             }
-         
         }
-        
-
         string json = JsonHelper.ToJson(car,true);
-
-        Debug.Log(json);
-      
-            File.WriteAllText(Application.dataPath + "/PlayerData.json", json + "\n");
-
-       // TopLevelIntArray topLevelArray = new TopLevelIntArray() { array = array };
-
+   
+         File.WriteAllText(Application.dataPath + "/PlayerData.json", json + "\n");
     }
 
     public void LoadCard()
@@ -161,8 +142,18 @@ public class ManagerCard : MonoBehaviour {
             CardIdentityCollection.Add(curr);
             Debug.Log(player[i].NameTypeCard);
         }
-       
     }
 
-
+    public void BackToRandom() {
+        for (int i = 0; i < selectCardMenu.ParentCardPrefab.transform.childCount; i++)
+        {
+          
+            Destroy(selectCardMenu.ParentCardPrefab.transform.GetChild(i).gameObject);
+           
+        }
+        selectCardMenu.CardinMenu.Clear();
+        selectCardMenu.CardinMenuGameobject.Clear();
+        MenuRandom.SetActive(true);
+        MenuChooseCard.SetActive(false);
+    }
 }

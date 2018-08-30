@@ -46,6 +46,18 @@ public class CharacterSelectLogic : MonoBehaviour {
         return;
     }
 
+   void InitializeDataCharacther()
+    {
+        for (int i = 0; i < charactersControl.Length; i++)
+        {
+            charactersControl[i].GetComponent<CharacterData>().CharIden = SingletonCardData.instance.datacharacther[i].CardCharacter;
+            for (int j = 0; j < charactersControl[i].GetComponent<CharacterData>().CharData.Length; j++)
+            {
+                charactersControl[i].GetComponent<CharacterData>().CharData[j] = SingletonCardData.instance.datacharacther[i].CardDataCollection[j];
+            }
+        }
+    }
+
     private void Start()
     {
         Initialize();
@@ -53,6 +65,7 @@ public class CharacterSelectLogic : MonoBehaviour {
         currentChar = character.FirstCharacter;
 
         AssignCharacterControls();
+        InitializeDataCharacther();
     }
 
     private void FixedUpdate()

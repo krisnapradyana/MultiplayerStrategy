@@ -14,7 +14,9 @@ public class CardIdentity {
     public Sprite Icon;
 
     public int[] Stats = new int[4]; // Attack, Defense, Speed, Health
-    
+    public int[] StatsSort = new int[4]; // Sorting Stats
+    public string BestStats;
+
     public int StateRarity;
 
     public enum ClassCard {
