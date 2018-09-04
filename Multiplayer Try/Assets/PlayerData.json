@@ -1,0 +1,30 @@
+{
+    "Items": [
+        {
+            "NameTypeCard": "Goblin",
+            "IndeParentCard": 0,
+            "Icon": {
+                "instanceID": 0
+            },
+            "Stats": [
+                6,
+                1,
+                5,
+                3
+            ],
+            "StatsSort": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "BestStats": "",
+            "StateRarity": 0,
+            "StateID": 0,
+            "cardparentName": "Warrior",
+            "cardParent": {
+                "instanceID": -97658
+            }
+        }
+    ]
+}

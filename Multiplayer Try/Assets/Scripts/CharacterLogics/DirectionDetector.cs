@@ -5,42 +5,52 @@ using UnityEngine;
 public class DirectionDetector : MonoBehaviour {
 
     public bool dirAvailable;
+    public bool OpponentTouch;
     [HideInInspector]
     public Vector3 dirPosition;
-    private Material triggerColor;
+    public Material triggerColor;
 
     private void Start()
     {
         dirAvailable = false;
+        OpponentTouch = false;
         triggerColor = GetComponent<Renderer>().material;
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.tag == "Points" ) 
+         if (other.transform.tag == "Points" )
         {
-            Debug.Log("Hit");
+            if (OpponentTouch)
+            {
+                dirAvailable = false;
+                return;
+            }
             dirAvailable = true;
             dirPosition = other.transform.position;
             triggerColor.color = Color.green;
         }
-
-        else if(other.transform.tag == "Defender")
-        {
-            dirAvailable = false;
-        }
+         
+        
 
         else
-            return;
+            
+        return;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.tag == "Points" || other.transform.tag == "Defender")
+        if (other.transform.tag == "Points" )
         {
             dirAvailable = false;
+            
             dirPosition = this.transform.position; //if no object collided
             triggerColor.color = Color.yellow;
+            if (OpponentTouch)
+            {
+                OpponentTouch = false;
+               
+            }
         }
         else
             return;

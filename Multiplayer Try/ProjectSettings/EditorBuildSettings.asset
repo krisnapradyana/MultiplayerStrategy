@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/try.unity
+    path: Assets/Scenes/MainGameplayScene.unity
     guid: a83d61c5d36b0ba47b3abf5eb1424b75
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: 8716417c7a9a5954394199f09327489d
+  - enabled: 1
+    path: Assets/Scenes/CardFormationScene.unity
+    guid: 3521ba6a4ac2d544ab97dbd8b5ad88dc
   m_configObjects: {}

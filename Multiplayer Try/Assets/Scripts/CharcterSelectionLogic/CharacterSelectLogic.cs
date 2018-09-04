@@ -6,9 +6,18 @@ using CharacterSelectionFSM;
 
 public class CharacterSelectLogic : MonoBehaviour {
 
+    //Tambahan Efath
+   
+    public GameObject[] CharacterPoint;
+    public TurnBaseController ManagerTurnController;
+    public bool[] DeadOrLife;
+    //Tambahan Efath
+    
     public DirectionControl[] charactersControl;
     public Button[] switchCharacters;
     public Button[] directionalButtons;
+
+    
 
     public enum character
     {
@@ -22,13 +31,31 @@ public class CharacterSelectLogic : MonoBehaviour {
     private void Initialize()
     {
         stateMachine = new StateMachine<CharacterSelectLogic>(this);
+        ManagerTurnController = FindObjectOfType<TurnBaseController>();
+
         #region AssignSwitch Character Buttons
         switchCharacters[(int)character.FirstCharacter].onClick.AddListener(delegate { FirstChar(); });
+ 
+
         switchCharacters[(int)character.SecondCharacter].onClick.AddListener(delegate { SecondChar(); });
+     
+
         switchCharacters[(int)character.ThirdCharacter].onClick.AddListener(delegate { ThirdChar(); });
         switchCharacters[(int)character.FourthCharacter].onClick.AddListener(delegate { FourthChar(); });
         #endregion
         return;
+    }
+
+   void InitializeDataCharacther()
+    {
+        for (int i = 0; i < charactersControl.Length; i++)
+        {
+            charactersControl[i].GetComponent<CharacterData>().CharIden = SingletonCardData.instance.datacharacther[i].CardCharacter;
+            for (int j = 0; j < charactersControl[i].GetComponent<CharacterData>().CharData.Length; j++)
+            {
+                charactersControl[i].GetComponent<CharacterData>().CharData[j] = SingletonCardData.instance.datacharacther[i].CardDataCollection[j];
+            }
+        }
     }
 
     private void Start()
@@ -38,19 +65,21 @@ public class CharacterSelectLogic : MonoBehaviour {
         currentChar = character.FirstCharacter;
 
         AssignCharacterControls();
+        InitializeDataCharacther();
     }
 
     private void FixedUpdate()
     {
         Debug.Log("Current Char : " + currentChar.ToString());
         AcceptInputs();
+        DeadCharButton();
     }
 
     public void AssignCharacterControls()
     {
         //Debug.Log("Assigning Character control");
         if (currentChar == character.FirstCharacter)
-        {
+        {   
             directionalButtons[(int)DirectionControl.Directions.up].onClick.AddListener(delegate { charactersControl[(int)currentChar].AssignDirection((int)DirectionControl.Directions.up); });
             directionalButtons[(int)DirectionControl.Directions.down].onClick.AddListener(delegate { charactersControl[(int)currentChar].AssignDirection((int)DirectionControl.Directions.down); });
             directionalButtons[(int)DirectionControl.Directions.left].onClick.AddListener(delegate { charactersControl[(int)currentChar].AssignDirection((int)DirectionControl.Directions.left); });
@@ -87,19 +116,42 @@ public class CharacterSelectLogic : MonoBehaviour {
         //there is 4 directions, so the range hardcoded as 4 
         for (int i = 0; i < charactersControl[(int)currentChar].movTrigger.dirDetector.Length ; i++)
         {
-            if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == true && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
+            // Tambahan Efath       
+            if ( ManagerTurnController.FixMove)
             {
+                directionalButtons[i].interactable = false;
+            }
+
+           else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == true && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
+            {
+                //Debug.Log(charactersControl[(int)currentChar].movTrigger.dirDetector[i]);
                 directionalButtons[i].interactable = true;
             }
 
-            else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection)
+            else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID == CharacterBehaviour.states.CheckDirection )
             {
+                //Debug.Log(charactersControl[(int)currentChar].movTrigger.dirDetector[i]);
                 directionalButtons[i].interactable = false;
             }
 
             else if (charactersControl[(int)currentChar].movTrigger.dirDetector[i].dirAvailable == false && charactersControl[(int)currentChar].charBehave.stateID != CharacterBehaviour.states.CheckDirection)
             {
-               directionalButtons[i].interactable = false;
+                //Debug.Log(charactersControl[(int)currentChar].movTrigger.dirDetector[i]);
+                directionalButtons[i].interactable = false;
+            }
+
+            
+        
+        }
+    }
+
+    void DeadCharButton()
+    {
+        for (int i = 0; i < DeadOrLife.Length; i++)
+        {
+            if (DeadOrLife[i] == true)
+            {
+                switchCharacters[i].interactable = false;
             }
         }
     }
